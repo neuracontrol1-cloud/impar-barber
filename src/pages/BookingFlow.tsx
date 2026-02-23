@@ -247,7 +247,7 @@ function BookingFlow() {
             <div className="text-sm text-muted-foreground hidden sm:block">
               Passo {step} de 4
             </div>
-            <Link to="/" className="text-sm font-medium hover:underline text-primary">
+            <Link to="/login" className="text-sm font-medium hover:underline text-primary">
               Sou Barbeiro
             </Link>
           </div>

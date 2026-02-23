@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
 
 import BookingFlow from './pages/BookingFlow';
+import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminServices } from './pages/AdminServices';
@@ -44,7 +45,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/agendar" element={<BookingFlow />} />
                 <Route
                     path="/admin"
