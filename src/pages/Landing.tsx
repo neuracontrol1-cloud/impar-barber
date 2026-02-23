@@ -45,12 +45,13 @@ export function Landing() {
             <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
                 <div className="absolute inset-0 z-0 bg-black overflow-hidden">
                     <img
-                        src="/premium_barber_bg.png"
-                        alt="Ambiente Impar Barbearia"
-                        className="w-full h-full object-cover opacity-50 xl:object-[center_top]"
+                        src="/hero_bg_final.png"
+                        alt="Rafael Impar Barbearia"
+                        className="w-full h-full object-cover xl:object-[center_top]"
                     />
 
                     {/* Additional gradient overlays for text readability and smooth transition */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent" />
                 </div>
