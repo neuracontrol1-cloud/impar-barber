@@ -69,8 +69,12 @@ export function Landing() {
                     <img
                         src="/impar_logo.png"
                         alt="Impar Barbearia Logo"
-                        className="w-64 md:w-96 h-auto object-contain mb-12 mix-blend-screen"
+                        className="w-64 md:w-96 h-auto object-contain -mt-12 mb-6 mix-blend-screen"
                     />
+
+                    <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-10 font-light tracking-wide drop-shadow-md">
+                        Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
+                    </p>
 
                     <button
                         onClick={() => navigate('/agendar')}
