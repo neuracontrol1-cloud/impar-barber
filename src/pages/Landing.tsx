@@ -44,15 +44,24 @@ export function Landing() {
             {/* Hero Section */}
             <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
                 <div className="absolute inset-0 z-0 bg-black overflow-hidden">
+                    {/* Dark Brick Texture Base */}
                     <img
-                        src="/hero_bg_final.png"
-                        alt="Rafael Impar Barbearia"
-                        className="w-full h-full object-cover xl:object-[center_top]"
+                        src="/pure_brick_wall.png"
+                        alt="Parede de Tijolos Dark Premium"
+                        className="w-full h-full object-cover opacity-70"
                     />
 
+                    {/* Rafael Overlay - Screen Blend removes his black background */}
+                    <div className="absolute inset-0">
+                        <img
+                            src="/impar_rafael_bg.png"
+                            alt="Rafael Impar Barbearia"
+                            className="w-full h-full object-cover object-[left_top] mix-blend-screen opacity-90"
+                        />
+                    </div>
+
                     {/* Additional gradient overlays for text readability and smooth transition */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent" />
                 </div>
 
