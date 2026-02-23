@@ -86,144 +86,163 @@ export function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
-            <div className="absolute top-4 right-4">
-                <ThemeToggle />
-            </div>
-            <div className="w-full max-w-md space-y-8 bg-card p-8 rounded-xl border shadow-lg">
-                <div className="text-center space-y-2">
-                    <div className="mx-auto h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                        <Scissors className="h-6 w-6" />
-                    </div>
-                    <h2 className="text-2xl font-bold tracking-tight">
-                        {isForgotPassword ? 'Recuperar Senha' : isSignUp ? 'Crie sua conta' : 'Acesse sua conta'}
-                    </h2>
-                    <p className="text-muted-foreground">
-                        {isForgotPassword ? 'Digite seu email para receber o link' : isSignUp ? 'Preencha seus dados para começar' : 'Entre para agendar ou gerenciar'}
-                    </p>
+        <div className="min-h-screen bg-background flex">
+            {/* Left Side - Image (Visible on Desktop) */}
+            <div className="hidden lg:block lg:w-1/2 relative bg-zinc-900 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent z-10" />
+                <img
+                    src="/barber_portrait.png"
+                    alt="Rafael Goulart"
+                    className="w-full h-full object-cover opacity-80"
+                />
+                <div className="absolute bottom-12 left-12 z-20 space-y-4">
+                    <img src="/shop_interior.png" alt="Logo" className="w-32 h-auto opacity-90 rounded-full border-2 border-primary/50" />
+                    <h1 className="text-4xl font-serif text-white max-w-md leading-tight">
+                        Transforme sua confiança e recupere sua autoestima
+                    </h1>
                 </div>
+            </div>
 
-                <form onSubmit={handleAuth} className="space-y-4">
-                    {isSignUp && !isForgotPassword && (
-                        <>
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium" htmlFor="name">Nome Completo</label>
-                                <input
-                                    id="name"
-                                    type="text"
-                                    required
-                                    className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                                    placeholder="Seu nome"
-                                    value={name}
-                                    onChange={e => setName(e.target.value)}
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium" htmlFor="phone">Telefone</label>
-                                <input
-                                    id="phone"
-                                    type="tel"
-                                    required
-                                    className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                                    placeholder="(00) 00000-0000"
-                                    value={phone}
-                                    onChange={e => setPhone(e.target.value)}
-                                />
-                            </div>
-                        </>
-                    )}
-
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium" htmlFor="email">Email</label>
-                        <input
-                            id="email"
-                            type="email"
-                            required
-                            className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                            placeholder="seu@email.com"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
+            {/* Right Side - Form */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-4 relative">
+                <div className="absolute top-4 right-4">
+                    <ThemeToggle />
+                </div>
+                <div className="w-full max-w-md space-y-8 bg-card p-8 rounded-xl border shadow-lg relative z-20">
+                    <div className="text-center space-y-2">
+                        <div className="mx-auto h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                            <Scissors className="h-6 w-6" />
+                        </div>
+                        <h2 className="text-2xl font-bold tracking-tight">
+                            {isForgotPassword ? 'Recuperar Senha' : isSignUp ? 'Crie sua conta' : 'Acesse sua conta'}
+                        </h2>
+                        <p className="text-muted-foreground">
+                            {isForgotPassword ? 'Digite seu email para receber o link' : isSignUp ? 'Preencha seus dados para começar' : 'Entre para agendar ou gerenciar'}
+                        </p>
                     </div>
 
-                    {!isForgotPassword && (
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                                <label className="text-sm font-medium" htmlFor="password">Senha</label>
-                                {!isSignUp && (
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsForgotPassword(true)}
-                                        className="text-xs text-primary hover:underline"
-                                    >
-                                        Esqueceu a senha?
-                                    </button>
-                                )}
-                            </div>
-                            <input
-                                id="password"
-                                type="password"
-                                required
-                                className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </div>
-                    )}
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
-                    >
-                        {loading ? 'Processando...' : (
+                    <form onSubmit={handleAuth} className="space-y-4">
+                        {isSignUp && !isForgotPassword && (
                             <>
-                                <Lock className="w-4 h-4" />
-                                {isForgotPassword ? 'Enviar Link' : isSignUp ? 'Criar Conta' : 'Entrar'}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium" htmlFor="name">Nome Completo</label>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        required
+                                        className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        placeholder="Seu nome"
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium" htmlFor="phone">Telefone</label>
+                                    <input
+                                        id="phone"
+                                        type="tel"
+                                        required
+                                        className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                        placeholder="(00) 00000-0000"
+                                        value={phone}
+                                        onChange={e => setPhone(e.target.value)}
+                                    />
+                                </div>
                             </>
                         )}
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium" htmlFor="email">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                required
+                                className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                placeholder="seu@email.com"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        {!isForgotPassword && (
+                            <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <label className="text-sm font-medium" htmlFor="password">Senha</label>
+                                    {!isSignUp && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsForgotPassword(true)}
+                                            className="text-xs text-primary hover:underline"
+                                        >
+                                            Esqueceu a senha?
+                                        </button>
+                                    )}
+                                </div>
+                                <input
+                                    id="password"
+                                    type="password"
+                                    required
+                                    className="w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                    placeholder="••••••••"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
+                        >
+                            {loading ? 'Processando...' : (
+                                <>
+                                    <Lock className="w-4 h-4" />
+                                    {isForgotPassword ? 'Enviar Link' : isSignUp ? 'Criar Conta' : 'Entrar'}
+                                </>
+                            )}
+                        </button>
+
+                        {isForgotPassword && (
+                            <button
+                                type="button"
+                                onClick={() => setIsForgotPassword(false)}
+                                className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Voltar para o Login
+                            </button>
+                        )}
+                    </form>
+
+                    <div className="text-center text-sm">
+                        {!isForgotPassword && (
+                            <button
+                                type="button"
+                                onClick={() => setIsSignUp(!isSignUp)}
+                                className="text-primary hover:underline hover:text-primary/80 transition-colors"
+                            >
+                                {isSignUp ? 'Já tem uma conta? Faça Login' : 'Não tem conta? Crie uma agora'}
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="relative mt-6">
+                        <div className="absolute inset-0 flex items-center">
+                            <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                            <span className="bg-card px-2 text-muted-foreground">Ou</span>
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={() => navigate('/agendar')}
+                        className="w-full flex items-center justify-center gap-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground py-2 px-4 rounded-md transition-colors cursor-pointer mt-4"
+                    >
+                        <Scissors className="w-4 h-4" />
+                        Continuar sem Login (Convidado)
                     </button>
-
-                    {isForgotPassword && (
-                        <button
-                            type="button"
-                            onClick={() => setIsForgotPassword(false)}
-                            className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                            Voltar para o Login
-                        </button>
-                    )}
-                </form>
-
-                <div className="text-center text-sm">
-                    {!isForgotPassword && (
-                        <button
-                            type="button"
-                            onClick={() => setIsSignUp(!isSignUp)}
-                            className="text-primary hover:underline hover:text-primary/80 transition-colors"
-                        >
-                            {isSignUp ? 'Já tem uma conta? Faça Login' : 'Não tem conta? Crie uma agora'}
-                        </button>
-                    )}
                 </div>
-
-                <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-card px-2 text-muted-foreground">Ou</span>
-                    </div>
-                </div>
-
-                <button
-                    onClick={() => navigate('/agendar')}
-                    className="w-full flex items-center justify-center gap-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground py-2 px-4 rounded-md transition-colors cursor-pointer"
-                >
-                    <Scissors className="w-4 h-4" />
-                    Continuar sem Login (Convidado)
-                </button>
             </div>
         </div>
     );
