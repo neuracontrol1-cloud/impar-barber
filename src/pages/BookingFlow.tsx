@@ -4,7 +4,7 @@ import { BookingCalendar } from '../components/BookingCalendar';
 import { TimeSlotPicker } from '../components/TimeSlotPicker';
 import { BookingForm } from '../components/BookingForm';
 import { BookingSummary } from '../components/BookingSummary';
-import { Scissors, CheckCircle2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { CheckCircle2, ChevronRight, ChevronLeft } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { UserData, Service } from '../types';
 import { format } from 'date-fns';

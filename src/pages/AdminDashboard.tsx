@@ -284,9 +284,9 @@ export function AdminDashboard() {
     return (
         <div className="min-h-screen bg-muted/20">
             <nav className="bg-background border-b px-4 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
-                <div className="font-bold text-xl flex items-center gap-2">
-                    <ScissorsIcon className="w-5 h-5" />
-                    <span className="hidden sm:inline">Painel do Barbeiro</span>
+                <div className="font-serif font-bold text-xl flex items-center gap-3">
+                    <img src="/shop_interior.png" alt="Logo" className="w-10 h-10 object-cover rounded-full border border-primary/30" />
+                    <span className="hidden sm:inline text-primary">Painel do Barbeiro</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <ThemeToggle />
