@@ -42,8 +42,8 @@ export function Landing() {
             </header>
 
             {/* Hero Section */}
-            <section id="home" className="relative h-screen flex items-center justify-center pt-20">
-                <div className="absolute inset-0 top-20 z-0 bg-background overflow-hidden">
+            <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
+                <div className="absolute inset-0 z-0 bg-background overflow-hidden">
                     {/* Faded Image Overlay */}
                     <div className="absolute inset-0 w-full md:w-3/4 left-0 h-full"
                         style={{
