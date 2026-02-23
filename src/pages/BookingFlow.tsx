@@ -237,11 +237,11 @@ function BookingFlow() {
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
-      <header className="border-b sticky top-0 bg-background/95 backdrop-blur z-10">
-        <div className="container mx-auto flex h-16 items-center px-4 justify-between">
-          <div className="flex items-center gap-2 font-bold text-xl">
-            <Scissors className="h-6 w-6" />
-            <span>Impar Barbearia</span>
+      <header className="border-b sticky top-0 bg-zinc-900/95 backdrop-blur z-10">
+        <div className="container mx-auto flex h-20 items-center px-4 justify-between">
+          <div className="flex items-center gap-3">
+            <img src="/shop_interior.png" alt="Impar Barbearia Logo" className="h-12 w-auto rounded-full object-cover border border-primary/30" />
+            <span className="font-serif font-bold text-xl text-primary">Impar Barbearia</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-sm text-muted-foreground hidden sm:block">
@@ -255,16 +255,28 @@ function BookingFlow() {
       </header>
 
       <main className="container mx-auto px-4 py-8 pb-24">
-        <div className="mx-auto max-w-3xl space-y-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold tracking-tight">Agende seu horário</h1>
-            <p className="text-muted-foreground">
-              {step === 1 && "Selecione um ou mais serviços."}
-              {step === 2 && "Escolha a melhor data e horário."}
-              {step === 3 && "Informe seus dados."}
-              {step === 4 && "Confira e confirme."}
-            </p>
+        {step === 1 && (
+          <div className="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 relative shadow-lg border border-border/50">
+            <img src="/barber_action.png" alt="Barbeiro em ação" className="w-full h-full object-cover opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 text-center">
+              <h1 className="text-3xl font-serif font-bold text-white mb-2 tracking-wide">Agende seu horário</h1>
+              <p className="text-primary-foreground/90 font-medium">Excelência em cada detalhe do seu visual.</p>
+            </div>
           </div>
+        )}
+
+        <div className="mx-auto max-w-3xl space-y-8">
+          {step > 1 && (
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-serif font-bold tracking-tight">Agende seu horário</h1>
+              <p className="text-muted-foreground mt-2">
+                {step === 2 && "Escolha a melhor data e horário."}
+                {step === 3 && "Informe seus dados para contato."}
+                {step === 4 && "Confira e confirme seu agendamento."}
+              </p>
+            </div>
+          )}
 
           {/* Progress Bar */}
           <div className="relative mb-8">
