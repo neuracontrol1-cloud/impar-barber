@@ -65,11 +65,11 @@ export function Landing() {
                     <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent" />
                 </div>
 
-                <div className="relative z-10 text-center px-4 max-w-2xl mx-auto flex flex-col items-center">
+                <div className="relative text-center px-4 max-w-2xl mx-auto flex flex-col items-center">
                     <img
                         src="/impar_logo.png"
                         alt="Impar Barbearia Logo"
-                        className="w-64 md:w-96 h-auto object-contain mb-12 mix-blend-screen drop-shadow-2xl"
+                        className="w-64 md:w-96 h-auto object-contain mb-12 mix-blend-screen"
                     />
 
                     <button
