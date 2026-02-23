@@ -85,7 +85,7 @@ export function Landing() {
                         <div className="md:w-1/2 flex justify-center">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full" />
-                                <img src="/shop_interior.png" alt="Interior" className="relative z-10 max-w-sm md:max-w-md rounded-2xl grayscale hover:grayscale-0 transition-all duration-700 border border-white/10" />
+                                <img src="/shop_interior_real.png" alt="Interior da Barbearia" className="relative z-10 w-full max-w-sm md:max-w-md aspect-[3/4] object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-700 border border-white/10 shadow-2xl" />
                             </div>
                         </div>
                         <div className="md:w-1/2 space-y-8 text-center md:text-left">
