@@ -43,23 +43,16 @@ export function Landing() {
 
             {/* Hero Section */}
             <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
-                <div className="absolute inset-0 z-0 bg-background overflow-hidden">
-                    {/* Faded Image Overlay */}
-                    <div className="absolute inset-0 w-full md:w-3/4 left-0 h-full"
-                        style={{
-                            maskImage: 'linear-gradient(to right, black 40%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to right, black 40%, transparent 100%)',
-                        }}>
-                        <img
-                            src="/impar_rafael_bg.png"
-                            alt="Barbeiro Rafael"
-                            className="w-full h-full object-cover object-[left_top] opacity-90"
-                        />
-                    </div>
+                <div className="absolute inset-0 z-0 bg-black overflow-hidden">
+                    <img
+                        src="/premium_barber_bg.png"
+                        alt="Ambiente Impar Barbearia"
+                        className="w-full h-full object-cover opacity-50 xl:object-[center_top]"
+                    />
 
                     {/* Additional gradient overlays for text readability and smooth transition */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/80 to-background" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent" />
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
