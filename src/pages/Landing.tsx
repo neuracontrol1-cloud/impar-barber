@@ -43,24 +43,22 @@ export function Landing() {
 
             {/* Hero Section */}
             <section id="home" className="relative h-screen flex items-center justify-center pt-20">
-                <div className="absolute inset-0 z-0 bg-background overflow-hidden">
+                <div className="absolute inset-0 top-20 z-0 bg-background overflow-hidden">
                     {/* Faded Image Overlay */}
                     <div className="absolute inset-0 w-full md:w-3/4 left-0 h-full"
                         style={{
-                            maskImage: 'linear-gradient(to right, black 50%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
-                            maskComposite: 'intersect',
-                            WebkitMaskComposite: 'source-in'
+                            maskImage: 'linear-gradient(to right, black 40%, transparent 100%)',
+                            WebkitMaskImage: 'linear-gradient(to right, black 40%, transparent 100%)',
                         }}>
                         <img
                             src="/impar_rafael_bg.png"
                             alt="Barbeiro Rafael"
-                            className="w-full h-full object-cover object-[left_center] opacity-80"
+                            className="w-full h-full object-cover object-[left_top] opacity-90"
                         />
                     </div>
 
                     {/* Additional gradient overlays for text readability and smooth transition */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/60 to-background" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/80 to-background" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 </div>
 
