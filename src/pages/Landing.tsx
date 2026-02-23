@@ -11,7 +11,7 @@ export function Landing() {
             <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
                 <div className="container mx-auto px-4 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src="/shop_interior.png" alt="Logo Impar" className="w-12 h-12 rounded-full border border-primary/30 object-cover" />
+                        <img src="/impar_logo.png" alt="Logo Impar" className="h-12 w-auto object-contain mix-blend-lighten" />
                         <span className="font-serif text-2xl tracking-wider text-white hidden sm:block">IMPAR BARBEARIA</span>
                     </div>
 
@@ -54,7 +54,7 @@ export function Landing() {
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
-                    <img src="/shop_interior.png" alt="Logo" className="w-32 h-32 md:w-48 md:h-48 rounded-full border-2 border-primary/50 mb-8 shadow-[0_0_50px_rgba(251,191,36,0.2)]" />
+                    <img src="/impar_logo.png" alt="Logo" className="h-32 md:h-48 w-auto object-contain mb-8 mix-blend-lighten drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" />
 
                     <h1 className="text-5xl md:text-8xl font-serif text-white mb-6 leading-none drop-shadow-2xl">
                         BEM-VINDO A <br className="hidden md:block" /> IMPAR BARBEARIA
@@ -201,7 +201,7 @@ export function Landing() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-center md:text-left">
                         <div>
                             <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
-                                <img src="/shop_interior.png" alt="Logo" className="w-10 h-10 rounded-full border border-primary/50" />
+                                <img src="/impar_logo.png" alt="Logo" className="h-12 w-auto object-contain mix-blend-lighten" />
                                 <span className="font-serif text-xl tracking-wider text-white">IMPAR BARBEARIA</span>
                             </div>
                             <p className="text-zinc-500 font-light max-w-sm mx-auto md:mx-0">

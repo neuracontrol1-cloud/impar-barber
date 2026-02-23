@@ -105,7 +105,7 @@ export function Login() {
             <div className="w-full max-w-md space-y-8 bg-black/40 backdrop-blur-xl p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl relative z-20">
                 <div className="text-center space-y-4">
                     <div className="mx-auto flex justify-center mb-6">
-                        <img src="/shop_interior.png" alt="Logo" className="w-28 h-28 object-cover rounded-full border border-primary/30 shadow-[0_0_30px_rgba(251,191,36,0.15)]" />
+                        <img src="/impar_logo.png" alt="Logo" className="w-32 h-auto object-contain mix-blend-lighten drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
                     </div>
                     <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow-md">
                         {isForgotPassword ? 'Recuperar Senha' : isSignUp ? 'Crie sua conta' : 'Acesse sua conta'}

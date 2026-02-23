@@ -286,7 +286,7 @@ export function AdminDashboard() {
             <nav className="bg-background border-b sticky top-0 z-20 shadow-sm">
                 <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                     <div className="font-serif font-bold text-xl flex items-center gap-3">
-                        <img src="/shop_interior.png" alt="Logo" className="w-10 h-10 object-cover rounded-full border border-primary/30" />
+                        <img src="/impar_logo.png" alt="Logo" className="h-10 w-auto object-contain mix-blend-lighten" />
                         <span className="hidden sm:inline text-primary">Painel do Barbeiro</span>
                     </div>
                     <div className="flex items-center gap-4">
