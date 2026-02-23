@@ -88,23 +88,23 @@ export function Login() {
     return (
         <div className="min-h-screen bg-background flex">
             {/* Left Side - Image (Visible on Desktop) */}
-            <div className="hidden lg:block lg:w-1/2 relative bg-zinc-950 overflow-hidden">
+            <div className="hidden lg:block lg:w-1/3 xl:w-[30%] relative bg-zinc-950 overflow-hidden shadow-2xl z-10">
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-background/40 to-transparent z-10" />
                 <img
                     src="/barber_portrait.png"
                     alt="Rafael Goulart"
                     className="w-full h-full object-cover opacity-80"
                 />
-                <div className="absolute bottom-12 left-12 z-20 space-y-4">
-                    <img src="/shop_interior.png" alt="Logo" className="w-32 h-auto opacity-90 rounded-full border-2 border-primary/50" />
-                    <h1 className="text-4xl font-serif text-white max-w-md leading-tight">
+                <div className="absolute bottom-12 left-8 z-20 space-y-4">
+                    <img src="/shop_interior.png" alt="Logo" className="w-24 h-auto opacity-90 rounded-full border-2 border-primary/50" />
+                    <h1 className="text-3xl xl:text-4xl font-serif text-white max-w-xs leading-tight">
                         Transforme sua confiança e recupere sua autoestima
                     </h1>
                 </div>
             </div>
 
             {/* Right Side - Form */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-4 relative">
+            <div className="w-full lg:w-2/3 xl:w-[70%] flex items-center justify-center p-4 relative bg-muted/10">
                 <div className="absolute top-4 right-4">
                     <ThemeToggle />
                 </div>
