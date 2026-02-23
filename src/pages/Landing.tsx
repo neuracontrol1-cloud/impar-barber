@@ -62,26 +62,28 @@ export function Landing() {
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 </div>
 
-                <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
-                    <img src="/impar_logo.png" alt="Logo" className="h-32 md:h-48 w-auto object-contain mb-8 mix-blend-screen" />
+                <div className="relative z-10 w-full px-4 md:px-12 flex justify-end h-full items-center">
+                    <div className="flex flex-col items-center md:items-end text-center md:text-right max-w-2xl mt-10 md:mt-0">
+                        <img src="/impar_logo.png" alt="Logo" className="w-48 md:w-64 h-auto object-contain mb-8 mix-blend-screen" />
 
-                    <h1 className="text-5xl md:text-8xl font-serif text-white mb-6 leading-none drop-shadow-2xl">
-                        BEM-VINDO A <br className="hidden md:block" /> IMPAR BARBEARIA
-                    </h1>
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-6 leading-none drop-shadow-2xl">
+                            BEM-VINDO A <br className="hidden lg:block" /> IMPAR BARBEARIA
+                        </h1>
 
-                    <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-10 font-light tracking-wide">
-                        Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
-                    </p>
+                        <p className="text-lg md:text-xl text-zinc-300 mb-10 font-light tracking-wide max-w-xl">
+                            Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
+                        </p>
 
-                    <button
-                        onClick={() => navigate('/agendar')}
-                        className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300"
-                    >
-                        <span className="relative z-10 flex items-center gap-2">
-                            Agendar Horário <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </span>
-                        <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-white/20"></div>
-                    </button>
+                        <button
+                            onClick={() => navigate('/agendar')}
+                            className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300"
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                Agendar Horário <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </span>
+                            <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-white/20"></div>
+                        </button>
+                    </div>
                 </div>
             </section>
 
