@@ -283,21 +283,23 @@ export function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-muted/20">
-            <nav className="bg-background border-b px-4 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
-                <div className="font-serif font-bold text-xl flex items-center gap-3">
-                    <img src="/shop_interior.png" alt="Logo" className="w-10 h-10 object-cover rounded-full border border-primary/30" />
-                    <span className="hidden sm:inline text-primary">Painel do Barbeiro</span>
-                </div>
-                <div className="flex items-center gap-4">
-                    <ThemeToggle />
-                    <RecentBookings />
-                    <button
-                        onClick={handleLogout}
-                        className="text-sm text-red-500 hover:text-red-700 flex items-center gap-1"
-                    >
-                        <LogOut className="w-4 h-4" />
-                        <span className="hidden sm:inline">Sair</span>
-                    </button>
+            <nav className="bg-background border-b sticky top-0 z-20 shadow-sm">
+                <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+                    <div className="font-serif font-bold text-xl flex items-center gap-3">
+                        <img src="/shop_interior.png" alt="Logo" className="w-10 h-10 object-cover rounded-full border border-primary/30" />
+                        <span className="hidden sm:inline text-primary">Painel do Barbeiro</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <ThemeToggle />
+                        <RecentBookings />
+                        <button
+                            onClick={handleLogout}
+                            className="text-sm text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            <span className="hidden sm:inline">Sair</span>
+                        </button>
+                    </div>
                 </div>
             </nav>
 
