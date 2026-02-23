@@ -90,11 +90,10 @@ export function Login() {
             {/* Left Side - Image (Visible on Desktop) */}
             <div className="hidden lg:block lg:w-1/2 relative bg-zinc-950 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-background/40 to-transparent z-10" />
-                {/* CSS Crop: Scale up the image and shift it to hide the PDF margins */}
                 <img
                     src="/barber_portrait.png"
                     alt="Rafael Goulart"
-                    className="w-full h-full object-cover opacity-80 scale-[1.35] origin-center -translate-y-[5%]"
+                    className="w-full h-full object-cover opacity-80"
                 />
                 <div className="absolute bottom-12 left-12 z-20 space-y-4">
                     <img src="/shop_interior.png" alt="Logo" className="w-32 h-auto opacity-90 rounded-full border-2 border-primary/50" />
