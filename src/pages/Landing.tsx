@@ -11,7 +11,7 @@ export function Landing() {
             <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
                 <div className="container mx-auto px-4 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src="/impar_logo.png" alt="Logo Impar" className="h-12 w-auto object-contain mix-blend-lighten" />
+                        <img src="/impar_logo.png" alt="Logo Impar" className="h-12 w-auto object-contain mix-blend-screen" />
                         <span className="font-serif text-2xl tracking-wider text-white hidden sm:block">IMPAR BARBEARIA</span>
                     </div>
 
@@ -43,29 +43,29 @@ export function Landing() {
 
             {/* Hero Section */}
             <section id="home" className="relative h-screen flex items-center justify-center pt-20">
-                <div className="absolute inset-0 z-0">
-                    {/* Ambient Background Layer */}
-                    <img
-                        src="/barber_action.png"
-                        alt="Ambiente Barbearia"
-                        className="w-full h-full object-cover opacity-60"
-                    />
-
-                    {/* Character Overlay with Screen Blend Mode to remove black background */}
-                    <div className="absolute inset-0">
+                <div className="absolute inset-0 z-0 bg-background overflow-hidden">
+                    {/* Faded Image Overlay */}
+                    <div className="absolute inset-0 w-full md:w-3/4 left-0 h-full"
+                        style={{
+                            maskImage: 'linear-gradient(to right, black 50%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                            WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                            maskComposite: 'intersect',
+                            WebkitMaskComposite: 'source-in'
+                        }}>
                         <img
                             src="/impar_rafael_bg.png"
                             alt="Barbeiro Rafael"
-                            className="w-full h-full object-cover md:object-[center_top] mix-blend-screen opacity-90"
+                            className="w-full h-full object-cover object-[left_center] opacity-80"
                         />
                     </div>
 
-                    {/* Dark gradient overlay for extreme contrast and text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
+                    {/* Additional gradient overlays for text readability and smooth transition */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/60 to-background" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
-                    <img src="/impar_logo.png" alt="Logo" className="h-32 md:h-48 w-auto object-contain mb-8 mix-blend-lighten drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" />
+                    <img src="/impar_logo.png" alt="Logo" className="h-32 md:h-48 w-auto object-contain mb-8 mix-blend-screen" />
 
                     <h1 className="text-5xl md:text-8xl font-serif text-white mb-6 leading-none drop-shadow-2xl">
                         BEM-VINDO A <br className="hidden md:block" /> IMPAR BARBEARIA
@@ -212,7 +212,7 @@ export function Landing() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-center md:text-left">
                         <div>
                             <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
-                                <img src="/impar_logo.png" alt="Logo" className="h-12 w-auto object-contain mix-blend-lighten" />
+                                <img src="/impar_logo.png" alt="Logo" className="h-12 w-auto object-contain mix-blend-screen" />
                                 <span className="font-serif text-xl tracking-wider text-white">IMPAR BARBEARIA</span>
                             </div>
                             <p className="text-zinc-500 font-light max-w-sm mx-auto md:mx-0">
