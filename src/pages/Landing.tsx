@@ -66,8 +66,6 @@ export function Landing() {
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
-                    <img src="/impar_logo.png" alt="Logo" className="w-32 md:w-48 h-auto object-contain mb-8 mix-blend-screen" />
-
                     <h1 className="text-5xl md:text-8xl font-serif text-white mb-6 leading-none drop-shadow-2xl">
                         BEM-VINDO A <br className="hidden md:block" /> IMPAR BARBEARIA
                     </h1>
