@@ -43,11 +43,11 @@ export function Landing() {
 
             {/* Hero Section */}
             <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
-                <div className="absolute inset-0 z-0 bg-black overflow-hidden">
+                <div className="absolute inset-0 z-0 bg-black overflow-hidden flex justify-center items-center">
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-full object-cover object-center opacity-80"
+                        className="w-full h-full object-cover object-[80%_center] md:object-right xl:object-center opacity-80 max-w-[2000px]"
                     />
 
                     {/* Additional gradient overlays for text readability */}
