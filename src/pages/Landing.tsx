@@ -44,13 +44,24 @@ export function Landing() {
             {/* Hero Section */}
             <section id="home" className="relative h-screen flex items-center justify-center pt-20">
                 <div className="absolute inset-0 z-0">
+                    {/* Ambient Background Layer */}
                     <img
                         src="/barber_action.png"
-                        alt="Barbeiro em ação"
-                        className="w-full h-full object-cover"
+                        alt="Ambiente Barbearia"
+                        className="w-full h-full object-cover opacity-60"
                     />
-                    {/* Dark gradient overlay for extreme contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background" />
+
+                    {/* Character Overlay with Screen Blend Mode to remove black background */}
+                    <div className="absolute inset-0">
+                        <img
+                            src="/impar_rafael_bg.png"
+                            alt="Barbeiro Rafael"
+                            className="w-full h-full object-cover md:object-[center_top] mix-blend-screen opacity-90"
+                        />
+                    </div>
+
+                    {/* Dark gradient overlay for extreme contrast and text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
