@@ -44,35 +44,19 @@ export function Landing() {
             {/* Hero Section */}
             <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
                 <div className="absolute inset-0 z-0 bg-black overflow-hidden">
-                    {/* Dark Brick Texture Base */}
                     <img
-                        src="/pure_brick_wall.png"
-                        alt="Parede de Tijolos Dark Premium"
-                        className="w-full h-full object-cover opacity-70"
+                        src="/hero_bg_scissors.jpg"
+                        alt="Impar Barbearia"
+                        className="w-full h-full object-cover object-center opacity-80"
                     />
 
-                    {/* Rafael Overlay - Screen Blend removes his black background */}
-                    <div className="absolute inset-0">
-                        <img
-                            src="/impar_rafael_bg.png"
-                            alt="Rafael Impar Barbearia"
-                            className="w-full h-full object-cover object-[left_top] mix-blend-screen opacity-90"
-                        />
-                    </div>
-
-                    {/* Additional gradient overlays for text readability and smooth transition */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent" />
+                    {/* Additional gradient overlays for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
                 </div>
 
-                <div className="relative text-center px-4 max-w-2xl mx-auto flex flex-col items-center">
-                    <img
-                        src="/impar_logo.png"
-                        alt="Impar Barbearia Logo"
-                        className="w-64 md:w-96 h-auto object-contain -mt-12 mb-6 mix-blend-screen"
-                    />
-
-                    <p className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto mb-10 font-light tracking-wide drop-shadow-md">
+                <div className="relative z-10 w-full h-full px-4 flex flex-col justify-end items-center pb-20">
+                    <p className="text-lg md:text-xl text-zinc-300 max-w-2xl text-center mb-8 font-light tracking-wide drop-shadow-md">
                         Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
                     </p>
 
