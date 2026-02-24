@@ -47,7 +47,7 @@ export function Landing() {
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-full object-contain object-center"
+                        className="w-full h-full object-cover object-[80%_center] md:object-right xl:object-center"
                     />
                 </div>
 
