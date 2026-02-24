@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Scissors, User, CalendarDays, ArrowRight, Instagram, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function Landing() {
     const navigate = useNavigate();
@@ -64,7 +65,12 @@ export function Landing() {
                     />
                 </div>
 
-                <div className="relative z-10 w-full h-full px-4 flex flex-col justify-end items-center pb-20">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                    className="relative z-10 w-full h-full px-4 flex flex-col justify-end items-center pb-20"
+                >
                     <p className="text-lg md:text-xl text-zinc-300 max-w-2xl text-center mb-8 font-light tracking-wide drop-shadow-md">
                         Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
                     </p>
@@ -78,12 +84,18 @@ export function Landing() {
                         </span>
                         <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-white/20"></div>
                     </button>
-                </div>
+                </motion.div>
             </section>
 
             {/* About Section */}
-            <section id="sobre" className="py-24 bg-background relative border-t border-white/5">
-                <div className="container mx-auto px-4">
+            <section id="sobre" className="py-24 bg-background relative border-t border-white/5 overflow-hidden">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8 }}
+                    className="container mx-auto px-4"
+                >
                     <div className="flex flex-col md:flex-row items-center gap-16">
                         <div className="md:w-1/2 flex justify-center">
                             <div className="relative">
@@ -110,12 +122,18 @@ export function Landing() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </section>
 
             {/* Services Minimalist Menu Section */}
-            <section id="servicos" className="py-24 bg-zinc-950 relative border-t border-white/5">
-                <div className="container mx-auto px-4 max-w-4xl">
+            <section id="servicos" className="py-24 bg-zinc-950 relative border-t border-white/5 overflow-hidden">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8 }}
+                    className="container mx-auto px-4 max-w-4xl"
+                >
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-6xl font-serif text-white mb-4">NOSSOS SERVIÇOS</h2>
                         <div className="w-24 h-1 bg-primary mx-auto" />
@@ -161,7 +179,7 @@ export function Landing() {
                             Ver Lista Completa e Agendar
                         </button>
                     </div>
-                </div>
+                </motion.div>
             </section>
 
             {/* Professionals Section */}
@@ -170,7 +188,13 @@ export function Landing() {
                     <User className="w-[500px] h-[500px]" />
                 </div>
 
-                <div className="container mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8 }}
+                    className="container mx-auto px-4"
+                >
                     <div className="text-center mb-16 relative z-10">
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-primary/50 mb-6">
                             <User className="w-8 h-8 text-primary" />
@@ -197,7 +221,7 @@ export function Landing() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </section>
 
             {/* Footer */}
