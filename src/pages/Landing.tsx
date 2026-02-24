@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { Scissors, User, CalendarDays, ArrowRight, Instagram, MapPin } from 'lucide-react';
-import { ThemeToggle } from '../components/ThemeToggle';
 
 export function Landing() {
     const navigate = useNavigate();
@@ -23,7 +22,6 @@ export function Landing() {
                     </nav>
 
                     <div className="flex items-center gap-4">
-                        <ThemeToggle />
                         <button
                             onClick={() => navigate('/login')}
                             className="text-sm font-medium text-zinc-400 hover:text-white uppercase tracking-wider hidden sm:block"

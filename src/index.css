@@ -61,49 +61,7 @@
 }
 
 :root {
-  /* Light Barbershop Theme (Classic/Vintage) */
-  --background: 40 20% 97%;
-  /* #fbf9f5 - Cream/Off-white */
-  --foreground: 20 10% 15%;
-  /* #2b2623 - Dark Warm Grey */
-
-  /* Gold / Bronze Accent - Darker for contrast on light bg */
-  --primary: 35 80% 40%;
-  /* #b87314 - Bronze/Gold */
-  --primary-foreground: 0 0% 100%;
-  /* White text on gold */
-
-  --card: 0 0% 100%;
-  /* Pure white cards */
-  --card-foreground: 20 10% 15%;
-
-  --popover: 0 0% 100%;
-  --popover-foreground: 20 10% 15%;
-
-  --secondary: 40 20% 92%;
-  /* Light beige for secondary backgrounds */
-  --secondary-foreground: 20 10% 15%;
-
-  --muted: 40 20% 92%;
-  --muted-foreground: 25 5% 45%;
-
-  --accent: 35 80% 40%;
-  --accent-foreground: 0 0% 100%;
-
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-
-  --border: 40 15% 85%;
-  /* Light warm border */
-  --input: 40 15% 85%;
-  --ring: 35 80% 40%;
-  /* Gold ring */
-
-  --radius: 0.5rem;
-}
-
-.dark {
-  /* Premium Dark Barbershop Theme (Inspired by Clube da Barba) */
+  /* Premium Dark Barbershop Theme (Permanent) */
   --background: 0 0% 8%;
   /* #141414 - Deep dark grey/almost black */
   --foreground: 0 0% 98%;
@@ -133,6 +91,12 @@
   --border: 0 0% 20%;
   --input: 0 0% 20%;
   --ring: 43 74% 49%;
+
+  --radius: 0.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -141,17 +105,7 @@ body {
   font-family: var(--font-sans);
 }
 
-.dark button,
-.dark input,
-.dark select,
-.dark textarea {
-  color: var(--color-foreground);
-}
-
-.dark .bg-amber-50 {
-  background-color: transparent;
-  /* Reset light mode amber if not overridden */
-}
+/* Removed .dark overrides as it is now default */
 
 h1,
 h2,
