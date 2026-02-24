@@ -4,6 +4,14 @@ import { Scissors, User, CalendarDays, ArrowRight, Instagram, MapPin } from 'luc
 export function Landing() {
     const navigate = useNavigate();
 
+    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        e.preventDefault();
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     return (
         <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
             {/* Sticky Header */}
@@ -15,10 +23,10 @@ export function Landing() {
                     </div>
 
                     <nav className="hidden md:flex items-center gap-8 font-medium text-sm tracking-widest uppercase">
-                        <a href="#home" className="text-zinc-400 hover:text-white transition-colors">Home</a>
-                        <a href="#sobre" className="text-zinc-400 hover:text-white transition-colors">A Barbearia</a>
-                        <a href="#servicos" className="text-zinc-400 hover:text-white transition-colors">Serviços</a>
-                        <a href="#profissionais" className="text-zinc-400 hover:text-white transition-colors">O Barbeiro</a>
+                        <a href="#home" onClick={(e) => scrollToSection(e, 'home')} className="text-zinc-400 hover:text-white transition-colors">Home</a>
+                        <a href="#sobre" onClick={(e) => scrollToSection(e, 'sobre')} className="text-zinc-400 hover:text-white transition-colors">A Barbearia</a>
+                        <a href="#servicos" onClick={(e) => scrollToSection(e, 'servicos')} className="text-zinc-400 hover:text-white transition-colors">Serviços</a>
+                        <a href="#profissionais" onClick={(e) => scrollToSection(e, 'profissionais')} className="text-zinc-400 hover:text-white transition-colors">O Barbeiro</a>
                     </nav>
 
                     <div className="flex items-center gap-4">
