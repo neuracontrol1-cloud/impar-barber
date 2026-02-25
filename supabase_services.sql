@@ -25,7 +25,9 @@ create policy "Admins can manage services" on services
 
 -- Seed some initial data
 insert into services (name, price, duration_minutes) values
-('Corte de cabelo simples', 45, 30),
+('Corte Ímpar (Degradê)', 50, 45),
+('Corte Simples', 40, 30),
+('Barba Premium', 30, 30),
 ('Corte de cabelo degrade', 50, 45),
 ('Corte de cabelo na navalha', 55, 50),
 ('Barba', 30, 30);

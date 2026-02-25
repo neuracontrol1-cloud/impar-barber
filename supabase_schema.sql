@@ -14,9 +14,11 @@ create table bookings (
   service_id text not null,
   service_name text not null,
   price numeric not null,
+  duration_minutes integer default 30,
   date date not null,
   time text not null,
   status text default 'confirmed' not null,
+  reminder_sent boolean default false,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
