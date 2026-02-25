@@ -11,11 +11,23 @@ interface DateStripProps {
 export function DateStrip({ selectedDate, onSelectDate, scheduledDates = [] }: DateStripProps) {
     const [currentMonth, setCurrentMonth] = useState(startOfMonth(selectedDate));
     const scrollRef = useRef<HTMLDivElement>(null);
+    const dayRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
     // Update current month when selectedDate changes (external control)
     useEffect(() => {
         if (!isSameMonth(selectedDate, currentMonth)) {
             setCurrentMonth(startOfMonth(selectedDate));
+        }
+
+        // Auto-scroll to center the selected date
+        const dateStr = format(selectedDate, 'yyyy-MM-dd');
+        const element = dayRefs.current.get(dateStr);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
         }
     }, [selectedDate]);
 
@@ -40,6 +52,10 @@ export function DateStrip({ selectedDate, onSelectDate, scheduledDates = [] }: D
                         return (
                             <button
                                 key={date.toISOString()}
+                                ref={(el) => {
+                                    if (el) dayRefs.current.set(dateStr, el);
+                                    else dayRefs.current.delete(dateStr);
+                                }}
                                 onClick={() => !isSunday && onSelectDate(date)}
                                 disabled={isSunday}
                                 className={`
