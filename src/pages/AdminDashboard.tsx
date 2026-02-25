@@ -302,6 +302,7 @@ export function AdminDashboard() {
 
             setSelectedBooking(null);
             fetchDashboardData();
+            fetchDaysWithBookings();
 
         } catch (error) {
             console.error('Erro ao cancelar agendamento:', error);
