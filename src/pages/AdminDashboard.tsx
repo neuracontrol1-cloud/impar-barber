@@ -262,10 +262,16 @@ export function AdminDashboard() {
     const realizedCount = bookings.filter(b => b.status === 'completed').length;
 
     // Helper for Cancellation Message (Barber cancelling)
-    const getCancellationWhatsAppUrl = (phone: string, clientName: string, time: string) => {
+    const getCancellationWhatsAppUrl = (phone: string, clientName: string, time: string, dateStr: string) => {
         const cleanPhone = phone.replace(/\D/g, '');
         const fullPhone = cleanPhone.length <= 11 ? `55${cleanPhone}` : cleanPhone;
-        const message = `Olá ${clientName}, aqui é da Impar Barbearia. Infelizmente precisaremos cancelar seu agendamento de hoje às ${time}. Pedimos desculpas pelo transtorno. Podemos remarcar?\n\nDigite *Agendar* para receber o link novamente.`;
+
+        // Logical check for "Today" vs "Future Date"
+        const dateObj = new Date(dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`);
+        const isToday = isSameDay(dateObj, new Date());
+        const dateFormatted = isToday ? 'hoje' : `do dia ${format(dateObj, "dd/MM", { locale: ptBR })}`;
+
+        const message = `Olá ${clientName}, aqui é da Impar Barbearia. Infelizmente precisaremos cancelar seu agendamento ${dateFormatted} às ${time}. Pedimos desculpas pelo transtorno. Podemos remarcar?\n\nDigite *Agendar* para receber o link novamente.`;
         return `https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`;
     };
 
@@ -289,7 +295,7 @@ export function AdminDashboard() {
             if (error) throw error;
 
             // Open WhatsApp with apology
-            const waUrl = getCancellationWhatsAppUrl(selectedBooking.client.phone, selectedBooking.client.name, selectedBooking.time);
+            const waUrl = getCancellationWhatsAppUrl(selectedBooking.client.phone, selectedBooking.client.name, selectedBooking.time, selectedBooking.date);
             window.open(waUrl, '_blank');
 
             setSelectedBooking(null);
