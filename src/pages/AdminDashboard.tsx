@@ -90,6 +90,7 @@ export function AdminDashboard() {
                     price,
                     duration_minutes,
                     status,
+                    is_mensalista,
                     clients (name, phone)
                 `)
                 .gte('date', startRange)
@@ -111,6 +112,7 @@ export function AdminDashboard() {
                         price: b.price,
                         duration_minutes: b.duration_minutes || 30,
                         status: b.status || 'pending', // Default to pending if null
+                        is_mensalista: b.is_mensalista,
                         client: {
                             name: b.clients?.name || 'Cliente Desconhecido',
                             phone: b.clients?.phone || '-'
