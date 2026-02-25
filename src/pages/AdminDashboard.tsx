@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogOut, Scissors as ScissorsIcon, ChevronLeft, ChevronRight, User, Phone, MessageCircle, CheckCircle2, History, Ban, TrendingUp } from 'lucide-react';
-import { format, addDays, isSameDay, endOfDay, startOfDay, subDays, addMonths } from 'date-fns';
+import { format, addDays, subDays, startOfMonth, addMonths, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Booking } from '../types';
 import { RecentBookings } from '../components/RecentBookings';
@@ -17,8 +17,6 @@ interface DashboardStats {
     blockedSlots: number;
     completedHistory: number;
 }
-
-
 
 // Helper to format phone for WhatsApp (assuming BR numbers)
 const getWhatsAppUrl = (phone: string, clientName: string, time: string, service: string) => {
@@ -64,20 +62,17 @@ export function AdminDashboard() {
                 .select('*', { count: 'exact', head: true })
                 .eq('active', true);
 
-            // 2. Fetch Completed Bookings Count for Current Month
-            const startOfMonth = new Date();
-            startOfMonth.setDate(1);
-            startOfMonth.setHours(0, 0, 0, 0);
+            // 2. Fetch Completed Bookings Count for Current Month (Standardized)
+            const today = new Date();
+            const startMonth = format(startOfMonth(today), 'yyyy-MM-dd');
 
             const { count: historyCount } = await supabase
                 .from('bookings')
                 .select('*', { count: 'exact', head: true })
                 .eq('status', 'completed')
-                .gte('date', startOfMonth.toISOString());
+                .gte('date', startMonth);
 
-            // 3. Fetch Bookings for Selected Date (Only Pending)
-            const startRange = addDays(startOfDay(selectedDate), -1).toISOString();
-            const endRange = addDays(endOfDay(selectedDate), 1).toISOString();
+            // 3. Fetch Bookings for Selected Date (Fetching ALL statuses to calculate stats correctly)
             const targetDateStr = format(selectedDate, 'yyyy-MM-dd');
 
             const { data: bookingsData, error: bookingsError } = await supabase
@@ -93,17 +88,14 @@ export function AdminDashboard() {
                     is_mensalista,
                     clients (name, phone)
                 `)
-                .gte('date', startRange)
-                .lte('date', endRange)
-                // .or('status.eq.pending,status.is.null') // Moved to local filter for debugging stability
+                .eq('date', targetDateStr)
                 .order('time');
 
             if (bookingsError) throw bookingsError;
 
-            // Transform data and Filter locally
+            // Transform data (local formatting and status safety)
             const formattedBookings: Booking[] = (bookingsData || [])
                 .map((b: any) => {
-                    const dateStr = b.date.includes('T') ? b.date : `${b.date}T00:00:00`;
                     return {
                         id: b.id,
                         time: b.time,
@@ -111,21 +103,23 @@ export function AdminDashboard() {
                         service_name: b.service_name,
                         price: b.price,
                         duration_minutes: b.duration_minutes || 30,
-                        status: b.status || 'pending', // Default to pending if null
+                        status: b.status || 'pending',
                         is_mensalista: b.is_mensalista,
                         client: {
                             name: b.clients?.name || 'Cliente Desconhecido',
                             phone: b.clients?.phone || '-'
                         },
-                        _localDate: format(new Date(dateStr), 'yyyy-MM-dd')
+                        _localDate: b.date // Already AAAA-MM-DD from fetch
                     };
-                })
-                .filter(b => b._localDate === targetDateStr && b.status !== 'cancelled');
+                });
 
             setBookings(formattedBookings);
+
+            // Calculate Today's Stats from the full list
+
             setStats({
                 activeServices: servicesCount || 0,
-                todayAppointments: formattedBookings.length,
+                todayAppointments: formattedBookings.filter(b => b.status !== 'cancelled').length,
                 blockedSlots: 0,
                 completedHistory: historyCount || 0
             });
@@ -163,8 +157,8 @@ export function AdminDashboard() {
             const { data, error } = await supabase
                 .from('bookings')
                 .select('date')
-                .gte('date', startOfDay(startRange).toISOString()) // Changed to startRange
-                .lte('date', endOfDay(endRange).toISOString())
+                .gte('date', format(startRange, 'yyyy-MM-dd'))
+                .lte('date', format(endRange, 'yyyy-MM-dd'))
                 .neq('status', 'cancelled');
 
             if (error) throw error;
@@ -210,24 +204,34 @@ export function AdminDashboard() {
     const handleAction = async (action: 'completed' | 'cancelled') => {
         if (!selectedBooking) return;
 
+        const bookingId = selectedBooking.id;
+        const originalBookings = [...bookings];
+
         try {
-            const { error } = await supabase
-                .from('bookings')
-                .update({ status: action })
-                .eq('id', selectedBooking.id);
-
-            if (error) throw error;
-
-            // Refresh everything to sync stats and list
-            await fetchDashboardData();
-
+            // 1. Optimistic UI Update (Immediate feedback)
+            setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: action } : b));
             setModalOpen(false);
             setSelectedBooking(null);
 
-            alert(`Agendamento ${action === 'completed' ? 'concluído' : 'cancelado'} com sucesso!`);
+            // 2. Database Update
+            const { data, error, status } = await supabase
+                .from('bookings')
+                .update({ status: action })
+                .eq('id', bookingId)
+                .select(); // Ask for data back to confirm update worked
+
+            console.log(`Update ${action} status:`, status, data);
+
+            if (error) throw error;
+
+            // 3. Re-fetch in background to sync stats (Revenue, History Count, etc.)
+            await fetchDashboardData();
+
         } catch (error) {
             console.error(`Erro ao atualizar status para ${action}: `, error);
-            alert('Erro ao atualizar status.');
+            // Rollback on error
+            setBookings(originalBookings);
+            alert('Erro ao atualizar status. Tente novamente.');
         }
     };
 
@@ -259,26 +263,32 @@ export function AdminDashboard() {
     const confirmBarberCancellation = async () => {
         if (!selectedBooking) return;
 
+        const bookingId = selectedBooking.id;
+        const originalBookings = [...bookings];
+
         try {
+            // Optimistic Update
+            setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: 'cancelled' } : b));
+            setModalOpen(false);
+            setCancellationModalOpen(false);
+
             const { error } = await supabase
                 .from('bookings')
                 .update({ status: 'cancelled' })
-                .eq('id', selectedBooking.id);
+                .eq('id', bookingId);
 
             if (error) throw error;
-
-            // Remove from list or update status
-            setBookings(prev => prev.map(b => b.id === selectedBooking.id ? { ...b, status: 'cancelled' } : b));
 
             // Open WhatsApp with apology
             const waUrl = getCancellationWhatsAppUrl(selectedBooking.client.phone, selectedBooking.client.name, selectedBooking.time);
             window.open(waUrl, '_blank');
 
-            setCancellationModalOpen(false);
             setSelectedBooking(null);
+            fetchDashboardData();
 
         } catch (error) {
             console.error('Erro ao cancelar agendamento:', error);
+            setBookings(originalBookings);
             alert('Erro ao cancelar agendamento.');
         }
     };
@@ -423,10 +433,13 @@ export function AdminDashboard() {
                     <DateStrip selectedDate={selectedDate} onSelectDate={setSelectedDate} scheduledDates={daysWithBookings} />
                 </div>
 
-                {/* Bookings List */}
+                {/* Bookings List - Pending */}
                 <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
                     <div className="p-4 border-b bg-muted/30 flex justify-between items-center">
-                        <h2 className="font-bold uppercase tracking-tight text-white">Agenda do Dia (Pendentes)</h2>
+                        <h2 className="font-bold uppercase tracking-tight text-white flex items-center gap-2">
+                            <History className="w-4 h-4 text-primary" />
+                            Agenda do Dia (Pendentes)
+                        </h2>
                         <button
                             onClick={() => setNewBookingModalOpen(true)}
                             className="text-xs font-bold uppercase tracking-widest bg-primary text-primary-foreground px-4 py-2 rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
@@ -436,7 +449,7 @@ export function AdminDashboard() {
                     </div>
 
                     <div className="divide-y">
-                        {bookings.length > 0 ? (
+                        {bookings.filter(b => b.status !== 'completed' && b.status !== 'cancelled').length > 0 ? (
                             bookings.filter(b => b.status !== 'completed' && b.status !== 'cancelled').map(booking => {
                                 const late = isLate(booking);
                                 return (
@@ -504,6 +517,41 @@ export function AdminDashboard() {
                         )}
                     </div>
                 </div>
+
+                {/* Bookings List - Completed Today (Discreet section) */}
+                {bookings.filter(b => b.status === 'completed').length > 0 && (
+                    <div className="bg-card/50 rounded-xl border border-dashed shadow-sm overflow-hidden mt-6">
+                        <div className="p-3 border-b bg-muted/10 flex justify-between items-center">
+                            <h2 className="font-bold uppercase tracking-tight text-white/50 text-xs flex items-center gap-2">
+                                <CheckCircle2 className="w-3 h-3 text-green-500/50" />
+                                Recentemente Concluídos
+                            </h2>
+                        </div>
+                        <div className="divide-y divide-border/20">
+                            {bookings.filter(b => b.status === 'completed').map(booking => (
+                                <div key={booking.id} className="p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-4 opacity-60">
+                                    <div className="flex gap-4">
+                                        <div className="font-bold rounded-lg p-1.5 min-w-[4rem] text-center flex flex-col justify-center bg-muted/20 text-muted-foreground text-sm">
+                                            {booking.time}
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-2 font-medium text-sm">
+                                                {booking.client.name}
+                                                <CheckCircle2 className="w-3 h-3 text-green-500/50" />
+                                            </div>
+                                            <div className="text-[11px] text-muted-foreground">
+                                                {booking.service_name} • R$ {booking.price.toFixed(2)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-[10px] font-bold text-green-500/50 uppercase tracking-widest bg-green-500/5 px-2 py-1 rounded border border-green-500/10">
+                                        Finalizado
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </main >
 
             {/* Action Modal (Completion/No-Show) */}

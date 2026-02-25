@@ -44,8 +44,8 @@ export function AdminFinance() {
 
     const fetchFinancialData = async () => {
         try {
-            const start = startOfMonth(selectedMonth).toISOString();
-            const end = endOfMonth(selectedMonth).toISOString();
+            const start = format(startOfMonth(selectedMonth), 'yyyy-MM-dd');
+            const end = format(endOfMonth(selectedMonth), 'yyyy-MM-dd');
 
             const { data, error } = await supabase
                 .from('bookings')
@@ -55,7 +55,6 @@ export function AdminFinance() {
                 .lte('date', end);
 
             if (error) throw error;
-
             if (!data) return;
 
             // Calculate KPIs
@@ -90,7 +89,6 @@ export function AdminFinance() {
                 const pricePerService = booking.price / serviceNames.length;
 
                 serviceNames.forEach((serviceName: string) => {
-                    // Update if exists (it should, but handle custom/legacy cases if needed)
                     if (serviceMap.has(serviceName)) {
                         const current = serviceMap.get(serviceName)!;
                         serviceMap.set(serviceName, {
@@ -98,8 +96,7 @@ export function AdminFinance() {
                             revenue: current.revenue + pricePerService
                         });
                     } else {
-                        // If for some reason a service name in booking doesn't match active services, add it
-                        const current = serviceMap.get(serviceName) || { count: 0, revenue: 0 };
+                        const current = { count: 0, revenue: 0 };
                         serviceMap.set(serviceName, {
                             count: current.count + 1,
                             revenue: current.revenue + pricePerService
@@ -114,7 +111,7 @@ export function AdminFinance() {
                     count: stat.count,
                     revenue: stat.revenue
                 }))
-                .sort((a, b) => b.count - a.count); // Sort by popularity
+                .sort((a, b) => b.count - a.count);
 
             setServiceData(processedData);
 

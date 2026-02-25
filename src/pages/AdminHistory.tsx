@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Phone, CheckCircle2, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { format, addDays, startOfDay, endOfDay } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -57,11 +57,8 @@ export function AdminHistory() {
 
             // Apply Date Filter if selected
             if (selectedDate) {
-                // Fetch wider range to handle UTC/Local shifts
-                const startRange = addDays(startOfDay(selectedDate), -1).toISOString();
-                const endRange = addDays(endOfDay(selectedDate), 1).toISOString();
-
-                query = query.gte('date', startRange).lte('date', endRange);
+                const dateStr = format(selectedDate, 'yyyy-MM-dd');
+                query = query.eq('date', dateStr);
             } else {
                 query = query.limit(50);
             }
@@ -74,7 +71,6 @@ export function AdminHistory() {
 
             const formatted: Booking[] = (data || [])
                 .map((b: any) => {
-                    const dateStr = b.date.includes('T') ? b.date : `${b.date}T00:00:00`;
                     return {
                         id: b.id,
                         time: b.time,
@@ -88,10 +84,10 @@ export function AdminHistory() {
                             name: b.clients?.name || 'Cliente Desconhecido',
                             phone: b.clients?.phone || '-'
                         },
-                        _localDate: format(new Date(dateStr), 'yyyy-MM-dd')
+                        _localDate: b.date
                     };
                 })
-                // Filter locally if a date is selected
+                // Filter locally if a date is selected (double check)
                 .filter(b => !targetDateStr || b._localDate === targetDateStr);
 
             setBookings(formatted);
