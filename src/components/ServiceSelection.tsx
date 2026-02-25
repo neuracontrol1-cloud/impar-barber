@@ -28,7 +28,7 @@ export function ServiceSelection({ services, selectedServices, onSelect }: Servi
                             <div className="space-y-1">
                                 <h3 className="font-medium leading-none">{service.name}</h3>
                                 <p className="text-sm text-muted-foreground">
-                                    R$ {service.price.toFixed(2)}
+                                    R$ {service.price.toFixed(2)} • {service.duration_minutes || 30} min
                                 </p>
                             </div>
                             {isSelected && (
