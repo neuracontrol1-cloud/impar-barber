@@ -254,28 +254,24 @@ function BookingFlow() {
       </header>
 
       <main className="container mx-auto px-4 py-8 pb-24">
-        {step === 1 && (
-          <div className="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 relative shadow-lg border border-border/50">
-            <img src="/booking_banner_premium.png" alt="Barbeiro em ação" className="w-full h-full object-cover object-[center_70%]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-            <div className="absolute bottom-10 left-6 right-6 text-center">
-              <h1 className="text-3xl font-serif font-bold text-white mb-2 tracking-wide">Agende seu horário</h1>
-              <p className="text-zinc-300 font-medium">Excelência em cada detalhe do seu visual.</p>
-            </div>
+        <div className="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 relative shadow-lg border border-border/50">
+          <img src="/booking_banner_premium.png" alt="Barbeiro em ação" className="w-full h-full object-cover object-[center_70%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-2 tracking-wider drop-shadow-lg">
+              {step === 1 ? "Agende seu horário" : "Agende seu horário"}
+            </h1>
+            <p className="text-primary font-medium tracking-widest uppercase text-xs sm:text-sm drop-shadow-md">
+              {step === 1 && "Escolha os serviços desejados"}
+              {step === 2 && "Selecione a melhor data e hora"}
+              {step === 3 && "Informe seus dados de contato"}
+              {step === 4 && "Confira os detalhes finais"}
+            </p>
           </div>
-        )}
+        </div>
 
         <div className="mx-auto max-w-3xl space-y-8">
-          {step > 1 && (
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-serif font-bold tracking-tight">Agende seu horário</h1>
-              <p className="text-muted-foreground mt-2">
-                {step === 2 && "Escolha a melhor data e horário."}
-                {step === 3 && "Informe seus dados para contato."}
-                {step === 4 && "Confira e confirme seu agendamento."}
-              </p>
-            </div>
-          )}
+
 
           {/* Progress Bar */}
           <div className="relative mb-8">
