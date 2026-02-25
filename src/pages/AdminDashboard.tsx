@@ -8,6 +8,7 @@ import type { Booking } from '../types';
 import { RecentBookings } from '../components/RecentBookings';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DateStrip } from '../components/DateStrip';
+import { NewBookingModal } from '../components/NewBookingModal';
 
 interface DashboardStats {
     activeServices: number;
@@ -141,6 +142,7 @@ export function AdminDashboard() {
     };
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [newBookingModalOpen, setNewBookingModalOpen] = useState(false);
     const [cancellationModalOpen, setCancellationModalOpen] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
     const [daysWithBookings, setDaysWithBookings] = useState<string[]>([]); // Dates that have bookings
@@ -430,8 +432,11 @@ export function AdminDashboard() {
                 {/* Bookings List */}
                 <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
                     <div className="p-4 border-b bg-muted/30 flex justify-between items-center">
-                        <h2 className="font-bold">Agenda do Dia (Pendentes)</h2>
-                        <button className="text-xs bg-primary text-primary-foreground px-3 py-1 rounded-full">
+                        <h2 className="font-bold uppercase tracking-tight text-white">Agenda do Dia (Pendentes)</h2>
+                        <button
+                            onClick={() => setNewBookingModalOpen(true)}
+                            className="text-xs font-bold uppercase tracking-widest bg-primary text-primary-foreground px-4 py-2 rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+                        >
                             Novo Agendamento
                         </button>
                     </div>
@@ -581,6 +586,13 @@ export function AdminDashboard() {
                     </div>
                 )
             }
+
+            <NewBookingModal
+                isOpen={newBookingModalOpen}
+                onClose={() => setNewBookingModalOpen(false)}
+                onSuccess={() => fetchDashboardData()}
+                initialDate={selectedDate}
+            />
         </div >
     );
 }
