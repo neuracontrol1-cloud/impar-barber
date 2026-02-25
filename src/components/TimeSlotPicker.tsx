@@ -4,21 +4,26 @@ import { Clock } from "lucide-react";
 interface TimeSlotPickerProps {
     selectedTime: string | null;
     onTimeSelect: (time: string) => void;
-    takenTimes?: string[];
-    date?: Date; // Receive the selected date
+    existingBookings?: { time: string; duration_minutes: number }[];
+    date?: Date;
+    totalDuration: number;
 }
 
-// Generate time slots from 09:00 to 19:00 with 1 hour intervals (or 30 mins)
+const timeToMinutes = (time: string) => {
+    const [h, m] = time.split(':').map(Number);
+    return h * 60 + m;
+};
+
+// Generate time slots from 09:00 to 19:00 with 30 mins intervals
 const timeSlots = [
     "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
     "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
     "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"
 ];
 
-export function TimeSlotPicker({ selectedTime, onTimeSelect, takenTimes = [], date }: TimeSlotPickerProps) {
-    const isTimePast = (time: string) => {
+export function TimeSlotPicker({ selectedTime, onTimeSelect, existingBookings = [], date, totalDuration }: TimeSlotPickerProps) {
+    const isPast = (time: string) => {
         if (!date) return false;
-
         const now = new Date();
         const isToday =
             date.getDate() === now.getDate() &&
@@ -35,9 +40,20 @@ export function TimeSlotPicker({ selectedTime, onTimeSelect, takenTimes = [], da
     };
 
     const availableSlots = timeSlots.filter(time => {
-        const isTaken = takenTimes.includes(time);
-        const isPast = isTimePast(time);
-        return !isTaken && !isPast;
+        if (isPast(time)) return false;
+
+        const slotStart = timeToMinutes(time);
+        const slotEnd = slotStart + totalDuration;
+
+        // Check for collision with any existing booking
+        const hasCollision = existingBookings.some(b => {
+            const bStart = timeToMinutes(b.time);
+            const bEnd = bStart + b.duration_minutes;
+            // Standard overlap check
+            return Math.max(slotStart, bStart) < Math.min(slotEnd, bEnd);
+        });
+
+        return !hasCollision;
     });
 
     if (availableSlots.length === 0) {

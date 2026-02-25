@@ -4,6 +4,7 @@ export interface Service {
     price: number;
     description?: string;
     active?: boolean;
+    duration_minutes?: number;
 }
 
 export interface UserData {
@@ -18,6 +19,7 @@ export interface Booking {
     date: string;
     service_name: string;
     price: number;
+    duration_minutes: number;
     status: 'pending' | 'completed' | 'cancelled';
     reminder_sent?: boolean;
     client: {

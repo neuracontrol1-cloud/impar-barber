@@ -12,7 +12,8 @@ export function AdminServices() {
     const [formData, setFormData] = useState<Partial<Service>>({
         name: '',
         price: 0,
-        active: true // Assuming we add 'active' to Service type later, or ignore for now if not in type
+        duration_minutes: 30,
+        active: true
     });
 
     useEffect(() => {
@@ -71,14 +72,22 @@ export function AdminServices() {
                 // Update
                 const { error } = await supabase
                     .from('services')
-                    .update({ name: formData.name, price: formData.price })
+                    .update({
+                        name: formData.name,
+                        price: formData.price,
+                        duration_minutes: formData.duration_minutes
+                    })
                     .eq('id', editingService.id);
                 if (error) throw error;
             } else {
                 // Create
                 const { error } = await supabase
                     .from('services')
-                    .insert([{ name: formData.name, price: formData.price }]);
+                    .insert([{
+                        name: formData.name,
+                        price: formData.price,
+                        duration_minutes: formData.duration_minutes
+                    }]);
                 if (error) throw error;
             }
 
@@ -137,6 +146,18 @@ export function AdminServices() {
                                     required
                                 />
                             </div>
+                            <div className="space-y-2 w-full sm:w-32">
+                                <label className="text-sm font-medium">Duração (min)</label>
+                                <input
+                                    name="duration_minutes"
+                                    type="number"
+                                    value={formData.duration_minutes}
+                                    onChange={handleChange}
+                                    className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+                                    placeholder="30"
+                                    required
+                                />
+                            </div>
                             <div className="flex gap-2 w-full sm:w-auto">
                                 <button type="button" onClick={handleCancel} className="flex-1 sm:flex-none p-2 border rounded-md hover:bg-accent text-muted-foreground">
                                     <X className="w-5 h-5" />
@@ -174,7 +195,9 @@ export function AdminServices() {
                                 <div key={service.id} className="p-4 flex items-center justify-between hover:bg-muted/10 transition-colors">
                                     <div>
                                         <p className="font-medium">{service.name}</p>
-                                        <p className="text-sm text-muted-foreground">R$ {service.price.toFixed(2)}</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            R$ {service.price.toFixed(2)} • {service.duration_minutes || 30} min
+                                        </p>
                                     </div>
                                     <div className="flex gap-2">
                                         <button

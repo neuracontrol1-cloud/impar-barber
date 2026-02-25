@@ -20,7 +20,7 @@ function BookingFlow() {
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [takenTimes, setTakenTimes] = useState<string[]>([]);
+  const [existingBookings, setExistingBookings] = useState<{ time: string, duration_minutes: number }[]>([]);
   const [userData, setUserData] = useState<UserData>({
     name: '',
     email: '',
@@ -87,17 +87,18 @@ function BookingFlow() {
   // Fetch Taken Times
   useEffect(() => {
     if (selectedDate) {
-      setTakenTimes([]);
-      getBookingsForDate(selectedDate).then(times => {
-        setTakenTimes(times);
+      setExistingBookings([]);
+      getBookingsForDate(selectedDate).then(bookings => {
+        setExistingBookings(bookings);
       });
     } else {
-      setTakenTimes([]);
+      setExistingBookings([]);
     }
   }, [selectedDate]);
 
   const selectedServicesList = services.filter(s => selectedServiceIds.includes(s.id));
   const totalPrice = selectedServicesList.reduce((sum, s) => sum + s.price, 0);
+  const totalDuration = selectedServicesList.reduce((sum, s) => sum + (s.duration_minutes || 30), 0);
 
   const handleServiceSelect = (serviceId: string) => {
     setSelectedServiceIds(prev =>
@@ -151,7 +152,10 @@ function BookingFlow() {
 
       await saveBooking({
         client: userData,
-        service: combinedService,
+        service: {
+          ...combinedService,
+          duration_minutes: totalDuration
+        },
         date: selectedDate,
         time: selectedTime
       });
@@ -308,7 +312,7 @@ function BookingFlow() {
               </div>
               <div className="space-y-4 scroll-mt-24" ref={timeSlotRef}>
                 <h3 className="font-semibold">Horário</h3>
-                {selectedDate ? <TimeSlotPicker selectedTime={selectedTime} onTimeSelect={setSelectedTime} takenTimes={takenTimes} date={selectedDate} /> : <div className="p-8 border border-dashed rounded-xl text-center text-muted-foreground">Selecione uma data</div>}
+                {selectedDate ? <TimeSlotPicker selectedTime={selectedTime} onTimeSelect={setSelectedTime} existingBookings={existingBookings} date={selectedDate} totalDuration={totalDuration} /> : <div className="p-8 border border-dashed rounded-xl text-center text-muted-foreground">Selecione uma data</div>}
               </div>
             </div>
           )}

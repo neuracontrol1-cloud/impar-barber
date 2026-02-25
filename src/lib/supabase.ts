@@ -8,7 +8,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function saveBooking(bookingData: {
     client: { name: string; email: string; phone: string };
-    service: { id: string; name: string; price: number };
+    service: { id: string; name: string; price: number; duration_minutes: number };
     date: Date;
     time: string;
 }) {
@@ -44,6 +44,7 @@ export async function saveBooking(bookingData: {
             service_id: bookingData.service.id,
             service_name: bookingData.service.name,
             price: bookingData.service.price,
+            duration_minutes: bookingData.service.duration_minutes,
             date: bookingData.date.toISOString(),
             time: bookingData.time
         });
@@ -62,7 +63,7 @@ export async function getBookingsForDate(date: Date) {
 
     const { data, error } = await supabase
         .from('bookings')
-        .select('time')
+        .select('time, duration_minutes')
         .gte('date', startOfDay.toISOString())
         .lte('date', endOfDay.toISOString())
         .neq('status', 'cancelled');
@@ -72,7 +73,10 @@ export async function getBookingsForDate(date: Date) {
         return [];
     }
 
-    return data.map(booking => booking.time);
+    return data.map(booking => ({
+        time: booking.time,
+        duration_minutes: booking.duration_minutes || 30
+    }));
 }
 
 export async function blockTimes(dates: Date[], times: string[]) {
