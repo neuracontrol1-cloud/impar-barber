@@ -3,7 +3,7 @@ import { Clock } from "lucide-react";
 
 interface TimeSlotPickerProps {
     selectedTime: string | null;
-    onTimeSelect: (time: string) => void;
+    onTimeSelect: (time: string | null) => void;
     existingBookings?: { time: string; duration_minutes: number }[];
     date?: Date;
     totalDuration: number;
