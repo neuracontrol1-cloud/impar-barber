@@ -72,10 +72,10 @@ export function DateStrip({ selectedDate, onSelectDate, bookingCounts = {} }: Da
                             >
                                 {/* Booking Count Badge */}
                                 {count > 0 && (
-                                    <span className={`absolute top-1.5 left-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[9px] font-black z-20 shadow-sm border
+                                    <span className={`absolute -top-2 -left-2 min-w-[20px] h-[20px] px-1 flex items-center justify-center rounded-full text-[10px] font-black z-20 shadow-lg border
                                         ${isSelected
                                             ? 'bg-white text-primary border-primary/20'
-                                            : 'bg-primary text-primary-foreground border-white/10 shadow-primary/20'}
+                                            : 'bg-primary text-primary-foreground border-white/20 shadow-primary/30'}
                                     `}>
                                         {count}
                                     </span>

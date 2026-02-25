@@ -159,7 +159,7 @@ export function AdminDashboard() {
                 .select('date')
                 .gte('date', format(startRange, 'yyyy-MM-dd'))
                 .lte('date', format(endRange, 'yyyy-MM-dd'))
-                .neq('status', 'cancelled');
+                .not('status', 'in', '("cancelled", "completed")');
 
             if (error) throw error;
 
