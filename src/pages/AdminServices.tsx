@@ -1,3 +1,4 @@
+// Force Sync - v2
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Plus, Edit, Trash2, Save, X, ArrowLeft } from 'lucide-react';
