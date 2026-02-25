@@ -159,7 +159,8 @@ export function AdminDashboard() {
                 .select('date')
                 .gte('date', format(startRange, 'yyyy-MM-dd'))
                 .lte('date', format(endRange, 'yyyy-MM-dd'))
-                .not('status', 'in', '("cancelled", "completed")');
+                .neq('status', 'cancelled')
+                .neq('status', 'completed');
 
             if (error) throw error;
 
@@ -235,6 +236,7 @@ export function AdminDashboard() {
 
             // 3. Re-fetch in background to sync stats (Revenue, History Count, etc.)
             await fetchDashboardData();
+            await fetchDaysWithBookings();
 
         } catch (error) {
             console.error(`Erro ao atualizar status para ${action}: `, error);
