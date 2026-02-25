@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, Scissors as ScissorsIcon, ChevronLeft, ChevronRight, User, Phone, MessageCircle, CheckCircle2, History, Ban, TrendingUp, Clock } from 'lucide-react';
+import { LogOut, Scissors as ScissorsIcon, ChevronLeft, ChevronRight, Phone, MessageCircle, CheckCircle2, History, Ban, TrendingUp, Clock } from 'lucide-react';
 import { format, addDays, isSameDay, endOfDay, startOfDay, subDays, addMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Booking } from '../types';
