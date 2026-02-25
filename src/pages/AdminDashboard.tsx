@@ -224,6 +224,15 @@ export function AdminDashboard() {
 
             if (error) throw error;
 
+            // Se o update retornou sucesso mas a data está vazia, o RLS bloqueou a alteração silenciosamente
+            if (status === 200 || status === 204) {
+                if (!data || data.length === 0) {
+                    setBookings(originalBookings);
+                    alert("⚠️ O banco de dados não permitiu a alteração. Certifique-se de executar os comandos SQL no Supabase para liberar as permissões (RLS).");
+                    return;
+                }
+            }
+
             // 3. Re-fetch in background to sync stats (Revenue, History Count, etc.)
             await fetchDashboardData();
 
