@@ -23,10 +23,10 @@ export function Landing() {
     return (
         <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
             {/* Sticky Header */}
-            <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
-                <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+            <header className="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-white/10">
+                <div className="container mx-auto px-4 h-28 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src="/header_logo_v2.png" alt="Logo Impar" className="h-16 w-auto object-contain" />
+                        <img src="/header_logo_v2.png" alt="Logo Impar" className="h-24 w-auto object-contain" />
                     </div>
 
                     <nav className="hidden md:flex items-center gap-8 font-medium text-sm tracking-widest uppercase">
@@ -55,7 +55,7 @@ export function Landing() {
             </header>
 
             {/* Hero Section */}
-            <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
+            <section id="home" className="relative h-[calc(100vh-7rem)] mt-28 flex items-center justify-center">
                 <div className="absolute inset-0 z-0 bg-black flex justify-center items-center overflow-hidden">
                     <img
                         src="/hero_bg_scissors.jpg"
