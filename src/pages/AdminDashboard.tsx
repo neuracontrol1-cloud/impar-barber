@@ -133,7 +133,7 @@ export function AdminDashboard() {
     const [newBookingModalOpen, setNewBookingModalOpen] = useState(false);
     const [cancellationModalOpen, setCancellationModalOpen] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-    const [daysWithBookings, setDaysWithBookings] = useState<string[]>([]); // Dates that have bookings
+    const [bookingCounts, setBookingCounts] = useState<Record<string, number>>({}); // Date (YYYY-MM-DD) -> Count
 
     const [now, setNow] = useState(new Date());
 
@@ -163,13 +163,13 @@ export function AdminDashboard() {
 
             if (error) throw error;
 
-            const uniqueDates = new Set<string>();
+            const counts: Record<string, number> = {};
             data?.forEach((b: any) => {
                 const dateStr = b.date.includes('T') ? b.date.split('T')[0] : b.date;
-                uniqueDates.add(dateStr);
+                counts[dateStr] = (counts[dateStr] || 0) + 1;
             });
 
-            setDaysWithBookings(Array.from(uniqueDates));
+            setBookingCounts(counts);
         } catch (error) {
             console.error('Erro ao buscar dias com agendamentos:', error);
         }
@@ -462,7 +462,7 @@ export function AdminDashboard() {
                             </button>
                         </div>
                     </div>
-                    <DateStrip selectedDate={selectedDate} onSelectDate={setSelectedDate} scheduledDates={daysWithBookings} />
+                    <DateStrip selectedDate={selectedDate} onSelectDate={setSelectedDate} bookingCounts={bookingCounts} />
                 </div>
 
                 {/* Bookings List - Pending */}

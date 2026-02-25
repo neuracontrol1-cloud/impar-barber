@@ -5,10 +5,10 @@ import { useRef, useState, useEffect } from 'react';
 interface DateStripProps {
     selectedDate: Date;
     onSelectDate: (date: Date) => void;
-    scheduledDates?: string[]; // Array of YYYY-MM-DD
+    bookingCounts?: Record<string, number>; // Date (YYYY-MM-DD) -> Count
 }
 
-export function DateStrip({ selectedDate, onSelectDate, scheduledDates = [] }: DateStripProps) {
+export function DateStrip({ selectedDate, onSelectDate, bookingCounts = {} }: DateStripProps) {
     const [currentMonth, setCurrentMonth] = useState(startOfMonth(selectedDate));
     const scrollRef = useRef<HTMLDivElement>(null);
     const dayRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
@@ -47,7 +47,7 @@ export function DateStrip({ selectedDate, onSelectDate, scheduledDates = [] }: D
                         const isToday = isSameDay(date, new Date());
                         const isSunday = date.getDay() === 0; // 0 = Sunday
                         const dateStr = format(date, 'yyyy-MM-dd');
-                        const hasBooking = scheduledDates.includes(dateStr);
+                        const count = bookingCounts[dateStr] || 0;
 
                         return (
                             <button
@@ -70,6 +70,17 @@ export function DateStrip({ selectedDate, onSelectDate, scheduledDates = [] }: D
                                     }
                                 `}
                             >
+                                {/* Booking Count Badge */}
+                                {count > 0 && (
+                                    <span className={`absolute top-1.5 left-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-[9px] font-black z-20 shadow-sm border
+                                        ${isSelected
+                                            ? 'bg-white text-primary border-primary/20'
+                                            : 'bg-primary text-primary-foreground border-white/10 shadow-primary/20'}
+                                    `}>
+                                        {count}
+                                    </span>
+                                )}
+
                                 <span className="text-[10px] uppercase font-bold tracking-wider mb-1 opacity-80">
                                     {format(date, 'EEE', { locale: ptBR }).replace('.', '')}
                                 </span>
@@ -80,14 +91,6 @@ export function DateStrip({ selectedDate, onSelectDate, scheduledDates = [] }: D
                                 {/* Today Indicator (Blue Dot) if not selected */}
                                 {isToday && !isSelected && !isSunday && (
                                     <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-blue-500" title="Hoje" />
-                                )}
-
-                                {/* Has Booking Indicator (Green Dot) */}
-                                {hasBooking && !isSelected && !isToday && !isSunday && (
-                                    <span className="absolute bottom-2 w-1.5 h-1.5 rounded-full bg-green-500 shadow-sm shadow-green-500/50" />
-                                )}
-                                {hasBooking && isSelected && (
-                                    <span className="absolute bottom-2 w-1.5 h-1.5 rounded-full bg-green-200 shadow-sm" />
                                 )}
                             </button>
                         );
