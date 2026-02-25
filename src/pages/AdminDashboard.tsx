@@ -384,40 +384,54 @@ export function AdminDashboard() {
                         </Link>
                     </div>
 
-                    {/* 2. Today's Summary Card (Compact & Premium) */}
-                    <div className="relative overflow-hidden rounded-3xl bg-[#1a1a1a] text-white shadow-2xl border border-white/10 dark:shadow-black/50">
+                    {/* 2. Today's Summary Card (Compact, Premium & Vibrant) */}
+                    <div className="relative overflow-hidden rounded-3xl bg-[#1a1a1a] text-white shadow-2xl border border-white/10 dark:shadow-black/50 group">
+                        {/* Premium Glow Effect */}
+                        <div className="absolute -inset-2 bg-primary/5 blur-2xl group-hover:bg-primary/10 transition-all duration-500" />
+
                         {/* Background Decoration */}
-                        <div className="absolute top-0 right-0 p-4 opacity-[0.03] transform translate-x-1/4 -translate-y-1/4">
+                        <div className="absolute top-0 right-0 p-4 opacity-[0.05] transform translate-x-1/4 -translate-y-1/4 group-hover:scale-110 transition-transform duration-700">
                             <ScissorsIcon className="w-48 h-48" />
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-30" />
+
+                        {/* Subtle Primary Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40" />
+                        <div className="absolute bottom-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full" />
 
                         <div className="relative p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div>
-                                <h3 className="text-muted-foreground font-semibold text-xs uppercase tracking-[0.2em] mb-1">Resumo do Dia</h3>
-                                <div className="flex items-baseline gap-3">
-                                    <p className="text-3xl font-black tracking-tighter">
+                                <h3 className="text-muted-foreground font-bold text-[10px] uppercase tracking-[0.3em] mb-1.5 opacity-60">Resumo do Dia</h3>
+                                <div className="flex items-baseline gap-4">
+                                    <p className="text-4xl font-black tracking-tighter bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent">
                                         {isSameDay(selectedDate, new Date()) ? 'HOJE' : format(selectedDate, "dd MMM", { locale: ptBR }).toUpperCase()}
                                     </p>
-                                    <span className="text-primary text-xs font-bold uppercase tracking-widest border-l border-white/10 pl-3">
-                                        {format(selectedDate, "EEEE", { locale: ptBR })}
-                                    </span>
+                                    <div className="flex flex-col border-l border-white/10 pl-4 py-1">
+                                        <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em] leading-none mb-1">
+                                            {format(selectedDate, "EEEE", { locale: ptBR })}
+                                        </span>
+                                        <span className="text-white/30 text-[9px] font-medium uppercase tracking-widest leading-none">
+                                            {format(selectedDate, "yyyy")}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-10 w-full sm:w-auto justify-between sm:justify-end">
-                                <div className="text-right">
-                                    <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Faturamento</p>
-                                    <p className="text-2xl font-black text-primary">
-                                        R$ {realizedRevenue.toFixed(2)}
-                                    </p>
+                            <div className="flex items-center gap-12 w-full sm:w-auto justify-between sm:justify-end">
+                                <div className="text-right flex flex-col items-end">
+                                    <span className="text-primary/50 text-[9px] font-black uppercase tracking-[0.2em] mb-1">Faturamento</span>
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-white/40 text-[10px] font-bold">R$</span>
+                                        <p className="text-3xl font-black text-white">
+                                            {realizedRevenue.toFixed(2)}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Concluídos</p>
-                                    <div className="flex items-center justify-end gap-2">
-                                        <span className="text-2xl font-black">{realizedCount}</span>
-                                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                            <ScissorsIcon className="w-4 h-4" />
+                                <div className="text-right flex flex-col items-end">
+                                    <span className="text-primary/50 text-[9px] font-black uppercase tracking-[0.2em] mb-1">Serviços</span>
+                                    <div className="flex items-center justify-end gap-3">
+                                        <span className="text-3xl font-black text-white">{realizedCount}</span>
+                                        <div className="w-10 h-10 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20 transform group-hover:rotate-12 transition-transform duration-500">
+                                            <ScissorsIcon className="w-5 h-5" />
                                         </div>
                                     </div>
                                 </div>
