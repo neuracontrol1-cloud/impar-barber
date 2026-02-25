@@ -209,7 +209,7 @@ export function Landing() {
                         <div className="group cursor-pointer">
                             <div className="relative overflow-hidden w-72 h-96 border border-zinc-800 bg-zinc-900">
                                 <img
-                                    src="/barber_portrait.png"
+                                    src="/rafael_portrait_v2.png"
                                     alt="Rafael Goulart"
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover:opacity-80 grayscale group-hover:grayscale-0"
                                 />
