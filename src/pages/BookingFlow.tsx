@@ -240,7 +240,7 @@ function BookingFlow() {
       <header className="border-b sticky top-0 bg-zinc-900/95 backdrop-blur z-10">
         <div className="container mx-auto flex h-20 items-center px-4 justify-between">
           <div className="flex items-center gap-3">
-            <img src="/header_logo_v2.png" alt="Impar Barbearia Logo" className="h-12 w-auto object-contain" />
+            <img src="/header_logo_v2.png" alt="Impar Barbearia Logo" className="h-16 w-auto object-contain" />
           </div>
           <div className="flex items-center gap-4">
             <div className="text-sm text-muted-foreground hidden sm:block">
