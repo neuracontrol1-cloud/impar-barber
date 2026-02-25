@@ -27,7 +27,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
         name: '',
         phone: '',
         isMensalista: false,
-        weeks: 4
+        months: 1
     });
 
     useEffect(() => {
@@ -116,7 +116,8 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
             // 2. Prepare & Verify Bookings
             const bookingDates = [selectedDate];
             if (clientData.isMensalista) {
-                for (let i = 1; i < clientData.weeks; i++) {
+                const totalWeeks = clientData.months * 4;
+                for (let i = 1; i < totalWeeks; i++) {
                     bookingDates.push(addWeeks(selectedDate, i));
                 }
             }
@@ -165,7 +166,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
             // Reset
             setSelectedServiceIds([]);
             setSelectedTime(null);
-            setClientData({ name: '', phone: '', isMensalista: false, weeks: 4 });
+            setClientData({ name: '', phone: '', isMensalista: false, months: 1 });
 
         } catch (error) {
             console.error('Erro ao salvar agendamento:', error);
@@ -316,26 +317,26 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
 
                         {clientData.isMensalista && (
                             <div className="p-6 bg-muted/40 rounded-3xl border-2 border-dashed border-primary/20 space-y-5 animate-in slide-in-from-top-4 duration-500">
-                                <p className="text-sm font-medium text-foreground">Por quantas semanas deseja fixar este horário?</p>
+                                <p className="text-sm font-medium text-foreground">Por quantos meses deseja fixar este horário?</p>
                                 <div className="grid grid-cols-4 gap-3">
-                                    {[2, 4, 8, 12].map(num => (
+                                    {[1, 3, 6, 12].map(num => (
                                         <button
                                             key={num}
-                                            onClick={() => setClientData({ ...clientData, weeks: num })}
+                                            onClick={() => setClientData({ ...clientData, months: num })}
                                             className={cn(
                                                 "py-3 rounded-xl border-2 font-bold transition-all",
-                                                clientData.weeks === num
+                                                clientData.months === num
                                                     ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
                                                     : "bg-background border-transparent hover:border-primary/20"
                                             )}
                                         >
-                                            {num}
+                                            {num} {num === 1 ? 'Mês' : 'Meses'}
                                         </button>
                                     ))}
                                 </div>
                                 <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-[11px] text-amber-500 flex gap-2 items-start">
                                     <Loader2 className="w-3 h-3 mt-0.5 shrink-0" />
-                                    <span>O sistema criará {clientData.weeks} agendamentos idênticos, pulando de 7 em 7 dias a partir da data selecionada.</span>
+                                    <span>O sistema criará {clientData.months * 4} agendamentos (4 por mês), pulando de 7 em 7 dias a partir da data selecionada.</span>
                                 </div>
                             </div>
                         )}
