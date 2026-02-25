@@ -105,7 +105,7 @@ export function Login() {
             <div className="w-full max-w-md space-y-8 bg-black/40 backdrop-blur-xl p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl relative z-20">
                 <div className="text-center space-y-4">
                     <div className="mx-auto flex justify-center mb-6">
-                        <img src="/header_logo_v2.png" alt="Logo" className="w-64 h-auto object-contain" />
+                        <img src="/header_logo_v3.png" alt="Logo" className="w-48 h-auto object-contain" />
                     </div>
                     <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow-md">
                         {isForgotPassword ? 'Recuperar Senha' : isSignUp ? 'Crie sua conta' : 'Acesse sua conta'}

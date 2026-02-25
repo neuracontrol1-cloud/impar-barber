@@ -237,10 +237,10 @@ function BookingFlow() {
 
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground">
-      <header className="border-b border-white/10 sticky top-0 bg-zinc-900/95 backdrop-blur z-20">
-        <div className="container mx-auto flex h-28 items-center px-4 justify-between">
+      <header className="border-b sticky top-0 bg-zinc-900/95 backdrop-blur z-20">
+        <div className="container mx-auto flex h-20 items-center px-4 justify-between">
           <div className="flex items-center gap-3">
-            <img src="/header_logo_v2.png" alt="Impar Barbearia Logo" className="h-24 w-auto object-contain" />
+            <img src="/header_logo_v3.png" alt="Impar Barbearia Logo" className="h-14 w-auto object-contain" />
           </div>
           <div className="flex items-center gap-4">
             <div className="text-sm text-muted-foreground hidden sm:block">

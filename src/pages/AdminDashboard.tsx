@@ -283,10 +283,10 @@ export function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-muted/20">
-            <nav className="bg-background border-b border-white/10 sticky top-0 z-20 shadow-sm">
-                <div className="container mx-auto px-4 py-6 flex items-center justify-between">
+            <nav className="bg-background border-b sticky top-0 z-20 shadow-sm">
+                <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                     <div className="font-serif font-bold text-xl flex items-center gap-3">
-                        <img src="/header_logo_v2.png" alt="Logo" className="h-20 w-auto object-contain" />
+                        <img src="/header_logo_v3.png" alt="Logo" className="h-10 w-auto object-contain" />
                         <span className="hidden sm:inline text-primary">Painel do Barbeiro</span>
                     </div>
                     <div className="flex items-center gap-4">
