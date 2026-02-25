@@ -16,6 +16,17 @@ interface DashboardStats {
     completedHistory: number;
 }
 
+const timeToMinutes = (time: string) => {
+    const [h, m] = time.split(':').map(Number);
+    return h * 60 + m;
+};
+
+const minutesToTime = (mins: number) => {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+};
+
 // Helper to format phone for WhatsApp (assuming BR numbers)
 const getWhatsAppUrl = (phone: string, clientName: string, time: string, service: string) => {
     const cleanPhone = phone.replace(/\D/g, '');
@@ -432,8 +443,9 @@ export function AdminDashboard() {
                                 return (
                                     <div key={booking.id} className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${late ? 'bg-amber-50 hover:bg-amber-100/80 border-l-4 border-l-amber-500 dark:bg-amber-950/30 dark:hover:bg-amber-900/40' : 'hover:bg-muted/10'}`}>
                                         <div className="flex gap-4">
-                                            <div className={`font-bold rounded-lg p-3 min-w-[4rem] text-center flex flex-col justify-center ${late ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200' : 'bg-primary/10 text-primary'}`}>
-                                                <span className="text-lg">{booking.time}</span>
+                                            <div className={`font-bold rounded-lg p-2 min-w-[5rem] text-center flex flex-col justify-center ${late ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200' : 'bg-primary/10 text-primary'}`}>
+                                                <span className="text-lg leading-tight">{booking.time}</span>
+                                                <span className="text-[10px] opacity-70 border-t border-current/20 mt-1 pt-1 font-medium">até {minutesToTime(timeToMinutes(booking.time) + (booking.duration_minutes || 30))}</span>
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 font-medium">
