@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, Scissors as ScissorsIcon, ChevronLeft, ChevronRight, User, Phone, MessageCircle, CheckCircle2, History, Ban, TrendingUp } from 'lucide-react';
+import { LogOut, Scissors as ScissorsIcon, ChevronLeft, ChevronRight, User, Phone, MessageCircle, CheckCircle2, History, Ban, TrendingUp, Clock } from 'lucide-react';
 import { format, addDays, isSameDay, endOfDay, startOfDay, subDays, addMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Booking } from '../types';
@@ -211,6 +211,12 @@ export function AdminDashboard() {
         if (!selectedBooking) return;
 
         try {
+            // 1. Update status locally immediately for snappy feel
+            setBookings(prev => prev.map(b => b.id === selectedBooking.id ? { ...b, status: action } : b));
+            setModalOpen(false);
+            setSelectedBooking(null);
+
+            // 2. Sync with server in background
             const { error } = await supabase
                 .from('bookings')
                 .update({ status: action })
@@ -218,13 +224,8 @@ export function AdminDashboard() {
 
             if (error) throw error;
 
-            // Refresh everything to sync stats and list
+            // 3. Refresh derived stats
             await fetchDashboardData();
-
-            setModalOpen(false);
-            setSelectedBooking(null);
-
-            alert(`Agendamento ${action === 'completed' ? 'concluído' : 'cancelado'} com sucesso!`);
         } catch (error) {
             console.error(`Erro ao atualizar status para ${action}: `, error);
             alert('Erro ao atualizar status.');
@@ -291,7 +292,7 @@ export function AdminDashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-muted/20">
+        <div className="min-h-screen bg-muted/20 pb-10">
             <nav className="bg-background border-b sticky top-0 z-20 shadow-sm">
                 <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                     <div className="font-serif font-bold text-xl flex items-center gap-3">
@@ -313,11 +314,9 @@ export function AdminDashboard() {
             </nav>
 
             <main className="container mx-auto p-4 sm:p-6 space-y-8">
-
                 <div className="space-y-6">
                     {/* 1. Actions Row (Top) */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-                        {/* Services */}
                         <Link to="/admin/services" className="bg-card p-4 rounded-2xl border shadow-sm flex flex-col justify-between hover:bg-muted/50 transition-colors group h-24">
                             <div className="flex justify-between items-start">
                                 <div className="p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -328,7 +327,6 @@ export function AdminDashboard() {
                             <p className="font-semibold text-sm">Serviços</p>
                         </Link>
 
-                        {/* Finance */}
                         <Link to="/admin/finance" className="bg-card p-4 rounded-2xl border shadow-sm flex flex-col justify-between hover:bg-muted/50 transition-colors group h-24">
                             <div className="flex justify-between items-start">
                                 <div className="p-2 bg-emerald-100 rounded-lg text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
@@ -339,7 +337,6 @@ export function AdminDashboard() {
                             <p className="font-semibold text-sm">Financeiro</p>
                         </Link>
 
-                        {/* History */}
                         <Link to="/admin/history" className="bg-card p-4 rounded-2xl border shadow-sm flex flex-col justify-between hover:bg-muted/50 transition-colors group h-24">
                             <div className="flex justify-between items-start">
                                 <div className="p-2 bg-muted rounded-lg text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">
@@ -353,7 +350,6 @@ export function AdminDashboard() {
                             </div>
                         </Link>
 
-                        {/* Blocking */}
                         <Link to="/admin/schedule" className="bg-card p-4 rounded-2xl border shadow-sm flex flex-col justify-between hover:bg-muted/50 transition-colors group h-24">
                             <div className="flex justify-between items-start">
                                 <div className="p-2 bg-red-100 rounded-lg text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors">
@@ -365,17 +361,15 @@ export function AdminDashboard() {
                         </Link>
                     </div>
 
-                    {/* 2. Today's Summary Card (Compact) */}
-                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 to-amber-800 text-white shadow-xl dark:shadow-amber-900/20">
-                        {/* Background Pattern */}
+                    {/* 2. Today's Summary Card */}
+                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 to-amber-800 text-white shadow-xl">
                         <div className="absolute top-0 right-0 p-4 opacity-10 transform translate-x-1/4 -translate-y-1/4">
                             <ScissorsIcon className="w-48 h-48" />
                         </div>
-
-                        <div className="relative p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="relative p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
                             <div>
                                 <h3 className="text-amber-100 font-medium text-sm mb-0.5">Resumo do Dia</h3>
-                                <div className="flex items-baseline gap-2">
+                                <div className="flex items-baseline gap-2 justify-center sm:justify-start">
                                     <p className="text-2xl font-bold tracking-tight">
                                         {isSameDay(selectedDate, new Date()) ? 'Hoje' : format(selectedDate, "dd MMM", { locale: ptBR })}
                                     </p>
@@ -384,13 +378,10 @@ export function AdminDashboard() {
                                     </span>
                                 </div>
                             </div>
-
                             <div className="flex items-center gap-8 w-full sm:w-auto justify-between sm:justify-end">
                                 <div className="text-right">
                                     <p className="text-amber-200 text-xs font-medium uppercase tracking-wider">Faturamento</p>
-                                    <p className="text-2xl font-bold">
-                                        R$ {realizedRevenue.toFixed(2)}
-                                    </p>
+                                    <p className="text-2xl font-bold">R$ {realizedRevenue.toFixed(2)}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="text-amber-200 text-xs font-medium uppercase tracking-wider">Concluídos</p>
@@ -405,17 +396,19 @@ export function AdminDashboard() {
                 </div>
 
                 {/* 3. Date Strip */}
-                <div>
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-semibold">Sua Agenda</h2>
-                        <div className="flex gap-2">
-                            <button onClick={() => changeMonth(-1)} className="p-2 hover:bg-muted rounded-full">
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-lg font-semibold flex items-center gap-2">
+                            Sua Agenda
+                        </h2>
+                        <div className="flex gap-2 bg-muted/30 p-1 rounded-full border">
+                            <button onClick={() => changeMonth(-1)} className="p-1 px-2 hover:bg-background rounded-full transition-colors">
                                 <ChevronLeft className="w-5 h-5" />
                             </button>
-                            <span className="flex items-center text-sm font-medium capitalize min-w-[120px] justify-center">
+                            <span className="flex items-center text-sm font-bold capitalize min-w-[120px] justify-center">
                                 {format(selectedDate, "MMMM yyyy", { locale: ptBR })}
                             </span>
-                            <button onClick={() => changeMonth(1)} className="p-2 hover:bg-muted rounded-full">
+                            <button onClick={() => changeMonth(1)} className="p-1 px-2 hover:bg-background rounded-full transition-colors">
                                 <ChevronRight className="w-5 h-5" />
                             </button>
                         </div>
@@ -423,168 +416,210 @@ export function AdminDashboard() {
                     <DateStrip selectedDate={selectedDate} onSelectDate={setSelectedDate} scheduledDates={daysWithBookings} />
                 </div>
 
-                {/* Bookings List */}
-                <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
-                    <div className="p-4 border-b bg-muted/30 flex justify-between items-center">
-                        <h2 className="font-bold uppercase tracking-tight text-white">Agenda do Dia (Pendentes)</h2>
-                        <button
-                            onClick={() => setNewBookingModalOpen(true)}
-                            className="text-xs font-bold uppercase tracking-widest bg-primary text-primary-foreground px-4 py-2 rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
-                        >
-                            Novo Agendamento
-                        </button>
+                {/* 4. Segmented Agenda Lists */}
+                <div className="space-y-6">
+                    {/* 4.1 Pending List */}
+                    <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
+                        <div className="p-4 border-b bg-muted/30 flex justify-between items-center">
+                            <h2 className="font-bold uppercase tracking-tight text-white flex items-center gap-2">
+                                <Clock className="w-4 h-4 text-amber-400" />
+                                Agenda do Dia (Pendentes)
+                            </h2>
+                            <button
+                                onClick={() => setNewBookingModalOpen(true)}
+                                className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg text-xs font-black transition-all shadow-lg"
+                            >
+                                NOVO AGENDAMENTO
+                            </button>
+                        </div>
+                        <div className="divide-y">
+                            {bookings.filter(b => b.status !== 'completed' && b.status !== 'cancelled').length > 0 ? (
+                                bookings.filter(b => b.status !== 'completed' && b.status !== 'cancelled').map(booking => {
+                                    const late = isLate(booking);
+                                    return (
+                                        <div key={booking.id} className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${late ? 'bg-amber-500/5 hover:bg-amber-500/10 border-l-4 border-l-amber-500' : 'hover:bg-muted/10'}`}>
+                                            <div className="flex gap-4">
+                                                <div className={`font-bold rounded-xl p-2 min-w-[5.5rem] text-center flex flex-col justify-center border ${late ? 'bg-amber-500/20 border-amber-500/30 text-amber-500' : 'bg-primary/10 border-primary/20 text-primary'}`}>
+                                                    <span className="text-lg leading-tight">{booking.time}</span>
+                                                    <span className="text-[9px] opacity-70 border-t border-current/20 mt-1 pt-1 uppercase font-black">até {minutesToTime(timeToMinutes(booking.time) + (booking.duration_minutes || 30))}</span>
+                                                </div>
+                                                <div>
+                                                    <div className="flex items-center gap-2 font-bold text-base">
+                                                        {booking.client.name}
+                                                        {booking.is_mensalista && (
+                                                            <span className="text-[9px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full font-black uppercase tracking-widest shadow-lg shadow-amber-500/10">
+                                                                Mensalista
+                                                            </span>
+                                                        )}
+                                                        {late && <span className="text-[9px] bg-amber-500 text-white px-2 py-0.5 rounded-full font-black uppercase tracking-wider animate-pulse">Aguardando</span>}
+                                                    </div>
+                                                    <div className="text-sm text-muted-foreground mt-0.5 font-medium italic">
+                                                        {booking.service_name} • R$ {booking.price.toFixed(2)}
+                                                    </div>
+                                                    <div className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5 bg-muted/50 w-fit px-2 py-1 rounded-lg">
+                                                        <Phone className="w-3 h-3" />
+                                                        {booking.client.phone}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <a
+                                                    href={getWhatsAppUrl(booking.client.phone, booking.client.name, booking.time, booking.service_name)}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 border border-green-500/30 bg-green-500/10 text-green-500 rounded-xl hover:bg-green-500/20 transition-all"
+                                                    title="WhatsApp"
+                                                >
+                                                    <MessageCircle className="w-5 h-5" />
+                                                </a>
+                                                <button
+                                                    onClick={() => openCancellationModal(booking)}
+                                                    className="p-2 border border-red-500/30 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500/20 transition-all"
+                                                    title="Cancelar"
+                                                >
+                                                    <Ban className="w-5 h-5" />
+                                                </button>
+                                                <button
+                                                    onClick={() => openActionModal(booking)}
+                                                    className="flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground font-black text-sm rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all"
+                                                >
+                                                    <CheckCircle2 className="w-4 h-4" />
+                                                    CONCLUIR
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            ) : (
+                                <div className="p-16 text-center text-muted-foreground bg-muted/5">
+                                    <CheckCircle2 className="w-12 h-12 mx-auto mb-4 opacity-5 text-green-500" />
+                                    <p className="font-bold text-lg">Nada pendente por aqui!</p>
+                                    <p className="text-sm opacity-60">Todos os clientes foram atendidos ou não há horários.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="divide-y">
-                        {bookings.length > 0 ? (
-                            bookings.filter(b => b.status !== 'completed' && b.status !== 'cancelled').map(booking => {
-                                const late = isLate(booking);
-                                return (
-                                    <div key={booking.id} className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${late ? 'bg-amber-50 hover:bg-amber-100/80 border-l-4 border-l-amber-500 dark:bg-amber-950/30 dark:hover:bg-amber-900/40' : 'hover:bg-muted/10'}`}>
+                    {/* 4.2 Completed List */}
+                    <div className="bg-card rounded-xl border border-dashed border-border shadow-inner overflow-hidden opacity-90 transition-all">
+                        <div className="p-4 border-b bg-zinc-900/10 flex justify-between items-center">
+                            <h2 className="font-black uppercase tracking-widest text-white/50 text-xs flex items-center gap-2">
+                                <CheckCircle2 className="w-4 h-4 text-green-500/50" />
+                                Serviços Finalizados ({isSameDay(selectedDate, new Date()) ? 'HOJE' : format(selectedDate, "dd/MM")})
+                            </h2>
+                            <span className="text-[10px] font-black text-muted-foreground bg-muted/50 px-3 py-1 rounded-full border border-border/50 uppercase">
+                                {bookings.filter(b => b.status === 'completed').length} Concluídos
+                            </span>
+                        </div>
+                        <div className="divide-y divide-border/30">
+                            {bookings.filter(b => b.status === 'completed').length > 0 ? (
+                                bookings.filter(b => b.status === 'completed').map(booking => (
+                                    <div key={booking.id} className="p-4 flex items-center justify-between hover:bg-muted/5 transition-colors group">
                                         <div className="flex gap-4">
-                                            <div className={`font-bold rounded-lg p-2 min-w-[5rem] text-center flex flex-col justify-center ${late ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200' : 'bg-primary/10 text-primary'}`}>
-                                                <span className="text-lg leading-tight">{booking.time}</span>
-                                                <span className="text-[10px] opacity-70 border-t border-current/20 mt-1 pt-1 font-medium">até {minutesToTime(timeToMinutes(booking.time) + (booking.duration_minutes || 30))}</span>
+                                            <div className="bg-green-500/5 text-green-500/50 font-black rounded-xl p-2 min-w-[5rem] text-center border border-green-500/10 text-xs flex items-center justify-center">
+                                                {booking.time}
                                             </div>
                                             <div>
-                                                <div className="flex items-center gap-2 font-medium">
-                                                    <User className="w-4 h-4 text-muted-foreground" />
+                                                <div className="flex items-center gap-2 font-bold text-white/40 group-hover:text-white/60 transition-colors">
                                                     {booking.client.name}
-                                                    {booking.is_mensalista && (
-                                                        <span className="text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full font-black uppercase tracking-widest shadow-lg shadow-amber-500/10">
-                                                            Mensalista
-                                                        </span>
-                                                    )}
-                                                    {late && <span className="text-[10px] bg-amber-200 text-amber-800 dark:bg-amber-900 dark:text-amber-100 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Aguardando Conclusão</span>}
+                                                    <CheckCircle2 className="w-3 h-3 text-green-500/40" />
                                                 </div>
-                                                <div className="text-sm text-muted-foreground mt-1">
+                                                <div className="text-[11px] text-muted-foreground/60 italic font-medium">
                                                     {booking.service_name} • R$ {booking.price.toFixed(2)}
-                                                </div>
-                                                <div className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                                                    <Phone className="w-3 h-3" />
-                                                    {booking.client.phone}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2">
-                                            <a
-                                                href={getWhatsAppUrl(booking.client.phone, booking.client.name, booking.time, booking.service_name)}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-xs border border-green-200 bg-green-50 text-green-700 px-3 py-1.5 rounded-md hover:bg-green-100 flex items-center gap-1"
-                                                title="Enviar WhatsApp"
-                                            >
-                                                <MessageCircle className="w-3 h-3" />
-                                                <span className="hidden sm:inline">WhatsApp</span>
-                                            </a>
-                                            <button
-                                                onClick={() => openCancellationModal(booking)}
-                                                className="text-xs border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800 dark:hover:bg-red-900/50 px-3 py-1.5 rounded-md flex items-center gap-1 transition-colors"
-                                                title="Cancelar Agendamento"
-                                            >
-                                                <Ban className="w-3 h-3" />
-                                                <span className="hidden sm:inline">Cancelar</span>
-                                            </button>
-                                            <button
-                                                onClick={() => openActionModal(booking)}
-                                                className="text-xs bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90 flex items-center gap-1"
-                                            >
-                                                <CheckCircle2 className="w-3 h-3" />
-                                                Concluir
-                                            </button>
+                                        <div className="text-[10px] text-green-500/50 font-black px-3 py-1 bg-green-500/5 rounded-lg border border-green-500/10 uppercase tracking-tighter">
+                                            Pago & Finalizado
                                         </div>
                                     </div>
-                                )
-                            })
-                        ) : (
-                            <div className="p-12 text-center text-muted-foreground">
-                                <CheckCircle2 className="w-12 h-12 mx-auto mb-4 opacity-20 text-green-500" />
-                                <p>Nenhum agendamento pendente para este dia!</p>
-                            </div>
-                        )}
+                                ))
+                            ) : (
+                                <div className="p-6 text-center text-muted-foreground/30 text-xs italic font-medium letter-spacing-tight">
+                                    Nenhum serviço finalizado ainda.
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </main >
+            </main>
 
             {/* Action Modal (Completion/No-Show) */}
-            {
-                modalOpen && selectedBooking && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
-                        <div className="bg-card border rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200">
-                            <div className="text-center">
-                                <h3 className="text-lg font-bold">Encerrar Atendimento</h3>
-                                <p className="text-sm text-muted-foreground mt-1">
-                                    O que aconteceu com o agendamento de <span className="font-medium text-foreground">{selectedBooking.client.name}</span> às {selectedBooking.time}?
-                                </p>
+            {modalOpen && selectedBooking && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+                    <div className="bg-card border-2 border-primary/20 rounded-3xl shadow-2xl max-w-sm w-full p-8 space-y-6 animate-in zoom-in-95 duration-200">
+                        <div className="text-center space-y-2">
+                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary mb-4">
+                                <CheckCircle2 className="w-8 h-8" />
                             </div>
+                            <h3 className="text-xl font-serif font-bold text-white">Encerrar Atendimento</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Confirme o que aconteceu com <span className="font-bold text-foreground">{selectedBooking.client.name}</span> às {selectedBooking.time}:
+                            </p>
+                        </div>
 
-                            <div className="grid grid-cols-1 gap-3">
-                                <button
-                                    onClick={() => handleAction('completed')}
-                                    className="flex items-center justify-center gap-2 p-3 bg-green-600 text-white hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 rounded-lg font-medium transition-colors shadow-sm"
-                                >
-                                    <CheckCircle2 className="w-5 h-5" />
-                                    Atendimento Realizado
-                                </button>
-
-                                <button
-                                    onClick={() => handleAction('cancelled')}
-                                    className="flex items-center justify-center gap-2 p-3 bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 rounded-lg font-medium transition-colors shadow-sm"
-                                >
-                                    <LogOut className="w-5 h-5 rotate-180" /> {/* Using LogOut as 'Exit/Cancel' icon */}
-                                    Cliente Não Compareceu
-                                </button>
-                            </div>
+                        <div className="grid grid-cols-1 gap-3">
+                            <button
+                                onClick={() => handleAction('completed')}
+                                className="flex items-center justify-center gap-3 p-4 bg-green-600 text-white hover:bg-green-700 rounded-2xl font-black transition-all shadow-lg shadow-green-600/20 active:scale-95"
+                            >
+                                <CheckCircle2 className="w-5 h-5" />
+                                ATENDIMENTO REALIZADO
+                            </button>
 
                             <button
-                                onClick={() => setModalOpen(false)}
-                                className="w-full p-2 text-sm text-muted-foreground hover:bg-muted rounded-lg"
+                                onClick={() => handleAction('cancelled')}
+                                className="flex items-center justify-center gap-3 p-4 bg-red-600/10 text-red-500 border-2 border-red-500/20 hover:bg-red-600 hover:text-white rounded-2xl font-bold transition-all active:scale-95"
                             >
-                                Cancelar (Fechar)
+                                <Ban className="w-5 h-5 shrink-0" />
+                                CLIENTE NÃO COMPARECEU
                             </button>
                         </div>
+
+                        <button
+                            onClick={() => setModalOpen(false)}
+                            className="w-full p-2 text-xs font-bold text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors"
+                        >
+                            Voltar (Fechar)
+                        </button>
                     </div>
-                )
-            }
+                </div>
+            )}
 
             {/* Cancellation Modal (Barber Cancel) */}
-            {
-                cancellationModalOpen && selectedBooking && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
-                        <div className="bg-card border-2 border-red-100 dark:border-red-900/50 rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200">
-                            <div className="text-center">
-                                <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-3">
-                                    <Ban className="w-6 h-6 text-red-600 dark:text-red-400" />
-                                </div>
-                                <h3 className="text-lg font-bold text-red-600 dark:text-red-400">Cancelar Agendamento?</h3>
-                                <p className="text-sm text-muted-foreground mt-2">
-                                    Você está prestes a cancelar o horário de <span className="font-medium text-foreground">{selectedBooking.client.name}</span>.
-                                </p>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                    Ao confirmar, o WhatsApp será aberto com uma mensagem de desculpas para o cliente.
-                                </p>
+            {cancellationModalOpen && selectedBooking && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+                    <div className="bg-card border-2 border-red-500/20 rounded-3xl shadow-2xl max-w-sm w-full p-8 space-y-6 animate-in zoom-in-95 duration-200">
+                        <div className="text-center space-y-2">
+                            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto text-red-500 mb-4">
+                                <Ban className="w-8 h-8" />
                             </div>
-
-                            <div className="grid grid-cols-1 gap-3">
-                                <button
-                                    onClick={confirmBarberCancellation}
-                                    className="flex items-center justify-center gap-2 p-3 bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 rounded-lg font-medium transition-colors shadow-sm"
-                                >
-                                    <MessageCircle className="w-5 h-5" />
-                                    Confirmar e Avisar Cliente
-                                </button>
-                            </div>
-
-                            <button
-                                onClick={() => setCancellationModalOpen(false)}
-                                className="w-full p-2 text-sm text-muted-foreground hover:bg-muted rounded-lg"
-                            >
-                                Voltar
-                            </button>
+                            <h3 className="text-xl font-serif font-bold text-red-500">Cancelar Horário</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Você está cancelando o horário de <span className="font-bold text-foreground">{selectedBooking.client.name}</span>.
+                            </p>
+                            <p className="text-xs text-muted-foreground/60 p-3 bg-muted/30 rounded-xl italic">
+                                Ao confirmar, abriremos o WhatsApp com uma mensagem automática de cancelamento.
+                            </p>
                         </div>
+
+                        <button
+                            onClick={confirmBarberCancellation}
+                            className="flex items-center justify-center gap-3 w-full p-4 bg-red-600 text-white hover:bg-red-700 rounded-2xl font-black transition-all shadow-lg active:scale-95"
+                        >
+                            <MessageCircle className="w-5 h-5" />
+                            CONFIRMAR E AVISAR
+                        </button>
+
+                        <button
+                            onClick={() => setCancellationModalOpen(false)}
+                            className="w-full p-2 text-xs font-bold text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors"
+                        >
+                            Voltar
+                        </button>
                     </div>
-                )
-            }
+                </div>
+            )}
 
             <NewBookingModal
                 isOpen={newBookingModalOpen}
@@ -595,6 +630,6 @@ export function AdminDashboard() {
                 }}
                 initialDate={selectedDate}
             />
-        </div >
+        </div>
     );
 }
