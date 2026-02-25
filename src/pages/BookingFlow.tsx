@@ -256,11 +256,11 @@ function BookingFlow() {
       <main className="container mx-auto px-4 py-8 pb-24">
         {step === 1 && (
           <div className="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 relative shadow-lg border border-border/50">
-            <img src="/booking_banner_premium.png" alt="Barbeiro em ação" className="w-full h-full object-cover opacity-80" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 text-center">
+            <img src="/booking_banner_premium.png" alt="Barbeiro em ação" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+            <div className="absolute bottom-10 left-6 right-6 text-center">
               <h1 className="text-3xl font-serif font-bold text-white mb-2 tracking-wide">Agende seu horário</h1>
-              <p className="text-primary-foreground/90 font-medium">Excelência em cada detalhe do seu visual.</p>
+              <p className="text-zinc-300 font-medium">Excelência em cada detalhe do seu visual.</p>
             </div>
           </div>
         )}
