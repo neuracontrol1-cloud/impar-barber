@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Search, CheckCircle2, Ban, Clock, Scissors as ScissorsIcon, MessageCircle } from 'lucide-react';
-import { format, isToday } from 'date-fns';
+import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Booking } from '../types';
+import { timeToMinutes, minutesToTime } from '../lib/utils';
 
 export function AdminOverview() {
     const navigate = useNavigate();
@@ -175,18 +176,17 @@ export function AdminOverview() {
                                 // Safe date parsing
                                 const dateStr = booking.date.includes('T') ? booking.date : `${booking.date}T00:00:00`;
                                 const dateObj = new Date(dateStr);
-                                const isBookingToday = isToday(dateObj);
 
                                 return (
                                     <div key={booking.id} className="p-4 hover:bg-muted/30 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                        <div className="flex items-start gap-4">
-                                            {/* Date Box */}
-                                            <div className={`p-3 rounded-lg text-center min-w-[70px] ${isBookingToday ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'
-                                                }`}>
-                                                <span className="block text-xs font-bold uppercase">{format(dateObj, 'MMM', { locale: ptBR })}</span>
-                                                <span className="block text-xl font-bold">{format(dateObj, 'dd')}</span>
+                                        <div className="flex gap-4">
+                                            <div className="bg-muted text-muted-foreground font-bold rounded-lg p-2 min-w-[5.5rem] text-center flex flex-col justify-center">
+                                                <span className="text-[10px] uppercase font-bold text-primary/70">{format(dateObj, 'MMM', { locale: ptBR })}</span>
+                                                <span className="text-xl leading-tight">{format(dateObj, 'dd')}</span>
+                                                <span className="text-[10px] opacity-70 border-t border-muted-foreground/20 mt-1 pt-1 font-medium">
+                                                    {booking.time} - {minutesToTime(timeToMinutes(booking.time) + (booking.duration_minutes || 30))}
+                                                </span>
                                             </div>
-
                                             <div>
                                                 <div className="flex items-center gap-2">
                                                     <h3 className="font-bold text-foreground text-lg">{booking.client.name}</h3>

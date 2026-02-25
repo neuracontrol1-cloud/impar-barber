@@ -8,6 +8,7 @@ import type { Booking } from '../types';
 import { RecentBookings } from '../components/RecentBookings';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DateStrip } from '../components/DateStrip';
+import { timeToMinutes, minutesToTime } from '../lib/utils';
 import { NewBookingModal } from '../components/NewBookingModal';
 
 interface DashboardStats {
@@ -17,16 +18,7 @@ interface DashboardStats {
     completedHistory: number;
 }
 
-const timeToMinutes = (time: string) => {
-    const [h, m] = time.split(':').map(Number);
-    return h * 60 + m;
-};
 
-const minutesToTime = (mins: number) => {
-    const h = Math.floor(mins / 60);
-    const m = mins % 60;
-    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
-};
 
 // Helper to format phone for WhatsApp (assuming BR numbers)
 const getWhatsAppUrl = (phone: string, clientName: string, time: string, service: string) => {

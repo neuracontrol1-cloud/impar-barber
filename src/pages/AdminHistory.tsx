@@ -7,6 +7,7 @@ import { ptBR } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import type { Booking } from '../types';
+import { timeToMinutes, minutesToTime } from '../lib/utils';
 
 export function AdminHistory() {
     const navigate = useNavigate();
@@ -236,9 +237,10 @@ export function AdminHistory() {
                             bookings.map(booking => (
                                 <div key={booking.id} className="p-4 flex flex-col sm:flex-row justify-between gap-4 hover:bg-muted/10 transition-colors">
                                     <div className="flex gap-4">
-                                        <div className="bg-muted text-muted-foreground font-bold rounded-lg p-3 min-w-[4rem] text-center flex flex-col justify-center">
-                                            <span className="text-sm">{format(new Date(booking.date + 'T00:00:00'), 'dd/MM', { locale: ptBR })}</span>
-                                            <span className="text-lg text-primary/80">{booking.time}</span>
+                                        <div className="bg-muted text-muted-foreground font-bold rounded-lg p-2 min-w-[5rem] text-center flex flex-col justify-center">
+                                            <span className="text-sm leading-tight">{format(new Date(booking.date + 'T00:00:00'), 'dd/MM', { locale: ptBR })}</span>
+                                            <span className="text-xs text-foreground mt-1">{booking.time}</span>
+                                            <span className="text-[9px] opacity-60 border-t border-muted-foreground/20 mt-1 pt-1">até {minutesToTime(timeToMinutes(booking.time) + (booking.duration_minutes || 30))}</span>
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2 font-medium">

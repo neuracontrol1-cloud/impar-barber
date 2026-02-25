@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase';
 import { ServiceSelection } from './ServiceSelection';
 import { BookingCalendar } from './BookingCalendar';
 import { TimeSlotPicker } from './TimeSlotPicker';
-import { cn } from '../lib/utils';
+import { cn, timeToMinutes } from '../lib/utils';
 import type { Service } from '../types';
 
 interface NewBookingModalProps {
@@ -113,28 +113,49 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                 clientId = newClient.id;
             }
 
-            // 2. Prepare Bookings
-            const bookingsToInsert = [];
+            // 2. Prepare & Verify Bookings
             const bookingDates = [selectedDate];
-
             if (clientData.isMensalista) {
                 for (let i = 1; i < clientData.weeks; i++) {
                     bookingDates.push(addWeeks(selectedDate, i));
                 }
             }
 
+            // CHECK COLLISIONS FOR ALL DATES
+            const slotStart = timeToMinutes(selectedTime);
+            const slotEnd = slotStart + totalDuration;
+
             for (const date of bookingDates) {
-                bookingsToInsert.push({
-                    client_id: clientId,
-                    service_id: selectedServiceIds[0], // Simplified to first service ID for the foreign key, but name is combined
-                    service_name: selectedServicesList.map(s => s.name).join(' + '),
-                    price: totalPrice,
-                    duration_minutes: totalDuration,
-                    date: format(date, 'yyyy-MM-dd'),
-                    time: selectedTime,
-                    status: 'confirmed'
+                const dateStr = format(date, 'yyyy-MM-dd');
+                const { data: dayBookings } = await supabase
+                    .from('bookings')
+                    .select('time, duration_minutes')
+                    .eq('date', dateStr)
+                    .neq('status', 'cancelled');
+
+                const hasCollision = dayBookings?.some(b => {
+                    const bStart = timeToMinutes(b.time);
+                    const bEnd = bStart + (b.duration_minutes || 30);
+                    return Math.max(slotStart, bStart) < Math.min(slotEnd, bEnd);
                 });
+
+                if (hasCollision) {
+                    alert(`Opa! O horário das ${selectedTime} já está ocupado no dia ${format(date, 'dd/MM')}. Agendamento cancelado.`);
+                    setLoading(false);
+                    return;
+                }
             }
+
+            const bookingsToInsert = bookingDates.map(date => ({
+                client_id: clientId,
+                service_id: selectedServiceIds[0],
+                service_name: selectedServicesList.map(s => s.name).join(' + '),
+                price: totalPrice,
+                duration_minutes: totalDuration,
+                date: format(date, 'yyyy-MM-dd'),
+                time: selectedTime,
+                status: 'confirmed'
+            }));
 
             const { error: bookingErr } = await supabase.from('bookings').insert(bookingsToInsert);
             if (bookingErr) throw bookingErr;
