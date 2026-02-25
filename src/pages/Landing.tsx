@@ -26,7 +26,7 @@ export function Landing() {
             <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
                 <div className="container mx-auto px-4 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src="/impar_logo.png" alt="Logo Impar" className="h-12 w-auto object-contain mix-blend-screen" />
+                        <img src="/header_logo_v2.png" alt="Logo Impar" className="h-12 w-auto object-contain" />
                         <span className="font-serif text-2xl tracking-wider text-white hidden sm:block">IMPAR BARBEARIA</span>
                     </div>
 
@@ -230,7 +230,7 @@ export function Landing() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-center md:text-left">
                         <div>
                             <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
-                                <img src="/impar_logo.png" alt="Logo" className="h-12 w-auto object-contain mix-blend-screen" />
+                                <img src="/header_logo_v2.png" alt="Logo" className="h-12 w-auto object-contain" />
                                 <span className="font-serif text-xl tracking-wider text-white">IMPAR BARBEARIA</span>
                             </div>
                             <p className="text-zinc-500 font-light max-w-sm mx-auto md:mx-0">
