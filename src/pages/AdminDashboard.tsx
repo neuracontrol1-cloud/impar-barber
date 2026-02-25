@@ -384,38 +384,41 @@ export function AdminDashboard() {
                         </Link>
                     </div>
 
-                    {/* 2. Today's Summary Card (Compact) */}
-                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600 to-amber-800 text-white shadow-xl dark:shadow-amber-900/20">
-                        {/* Background Pattern */}
-                        <div className="absolute top-0 right-0 p-4 opacity-10 transform translate-x-1/4 -translate-y-1/4">
+                    {/* 2. Today's Summary Card (Compact & Premium) */}
+                    <div className="relative overflow-hidden rounded-3xl bg-[#1a1a1a] text-white shadow-2xl border border-white/10 dark:shadow-black/50">
+                        {/* Background Decoration */}
+                        <div className="absolute top-0 right-0 p-4 opacity-[0.03] transform translate-x-1/4 -translate-y-1/4">
                             <ScissorsIcon className="w-48 h-48" />
                         </div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-30" />
 
                         <div className="relative p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div>
-                                <h3 className="text-amber-100 font-medium text-sm mb-0.5">Resumo do Dia</h3>
-                                <div className="flex items-baseline gap-2">
-                                    <p className="text-2xl font-bold tracking-tight">
-                                        {isSameDay(selectedDate, new Date()) ? 'Hoje' : format(selectedDate, "dd MMM", { locale: ptBR })}
+                                <h3 className="text-muted-foreground font-semibold text-xs uppercase tracking-[0.2em] mb-1">Resumo do Dia</h3>
+                                <div className="flex items-baseline gap-3">
+                                    <p className="text-3xl font-black tracking-tighter">
+                                        {isSameDay(selectedDate, new Date()) ? 'HOJE' : format(selectedDate, "dd MMM", { locale: ptBR }).toUpperCase()}
                                     </p>
-                                    <span className="text-amber-200 text-xs capitalize">
+                                    <span className="text-primary text-xs font-bold uppercase tracking-widest border-l border-white/10 pl-3">
                                         {format(selectedDate, "EEEE", { locale: ptBR })}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-8 w-full sm:w-auto justify-between sm:justify-end">
+                            <div className="flex items-center gap-10 w-full sm:w-auto justify-between sm:justify-end">
                                 <div className="text-right">
-                                    <p className="text-amber-200 text-xs font-medium uppercase tracking-wider">Faturamento</p>
-                                    <p className="text-2xl font-bold">
+                                    <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Faturamento</p>
+                                    <p className="text-2xl font-black text-primary">
                                         R$ {realizedRevenue.toFixed(2)}
                                     </p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-amber-200 text-xs font-medium uppercase tracking-wider">Concluídos</p>
-                                    <div className="flex items-center justify-end gap-1">
-                                        <span className="text-2xl font-bold">{realizedCount}</span>
-                                        <ScissorsIcon className="w-4 h-4 text-amber-300" />
+                                    <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Concluídos</p>
+                                    <div className="flex items-center justify-end gap-2">
+                                        <span className="text-2xl font-black">{realizedCount}</span>
+                                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                            <ScissorsIcon className="w-4 h-4" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
