@@ -155,8 +155,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                 duration_minutes: totalDuration,
                 date: format(date, 'yyyy-MM-dd'),
                 time: selectedTime,
-                status: 'confirmed',
-                is_mensalista: clientData.isMensalista
+                status: 'confirmed'
             }));
 
             const { error: bookingErr } = await supabase.from('bookings').insert(bookingsToInsert);

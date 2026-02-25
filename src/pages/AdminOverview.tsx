@@ -41,7 +41,6 @@ export function AdminOverview() {
                     price, 
                     duration_minutes,
                     status, 
-                    is_mensalista,
                     client_id,
                     clients (name, phone, email)
                 `)
@@ -59,7 +58,6 @@ export function AdminOverview() {
                 price: b.price,
                 duration_minutes: b.duration_minutes || 30,
                 status: b.status || 'pending',
-                is_mensalista: b.is_mensalista,
                 client: {
                     name: b.clients?.name || 'Cliente',
                     phone: b.clients?.phone || '',
