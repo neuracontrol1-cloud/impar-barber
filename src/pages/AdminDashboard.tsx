@@ -90,6 +90,7 @@ export function AdminDashboard() {
                     price,
                     duration_minutes,
                     status,
+                    is_mensalista,
                     clients (name, phone)
                 `)
                 .gte('date', startRange)
@@ -111,6 +112,7 @@ export function AdminDashboard() {
                         price: b.price,
                         duration_minutes: b.duration_minutes || 30,
                         status: b.status || 'pending', // Default to pending if null
+                        is_mensalista: b.is_mensalista,
                         client: {
                             name: b.clients?.name || 'Cliente Desconhecido',
                             phone: b.clients?.phone || '-'
@@ -448,6 +450,11 @@ export function AdminDashboard() {
                                                 <div className="flex items-center gap-2 font-medium">
                                                     <User className="w-4 h-4 text-muted-foreground" />
                                                     {booking.client.name}
+                                                    {booking.is_mensalista && (
+                                                        <span className="text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full font-black uppercase tracking-widest shadow-lg shadow-amber-500/10">
+                                                            Mensalista
+                                                        </span>
+                                                    )}
                                                     {late && <span className="text-[10px] bg-amber-200 text-amber-800 dark:bg-amber-900 dark:text-amber-100 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Aguardando Conclusão</span>}
                                                 </div>
                                                 <div className="text-sm text-muted-foreground mt-1">

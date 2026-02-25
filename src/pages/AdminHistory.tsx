@@ -42,6 +42,7 @@ export function AdminHistory() {
                     price,
                     duration_minutes,
                     status,
+                    is_mensalista,
                     clients (name, phone)
                 `)
                 .order('date', { ascending: false })
@@ -82,6 +83,7 @@ export function AdminHistory() {
                         price: b.price,
                         duration_minutes: b.duration_minutes || 30,
                         status: b.status,
+                        is_mensalista: b.is_mensalista,
                         client: {
                             name: b.clients?.name || 'Cliente Desconhecido',
                             phone: b.clients?.phone || '-'
@@ -246,6 +248,11 @@ export function AdminHistory() {
                                             <div className="flex items-center gap-2 font-medium">
                                                 <User className="w-4 h-4 text-muted-foreground" />
                                                 {booking.client.name}
+                                                {booking.is_mensalista && (
+                                                    <span className="text-[9px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-1.5 py-0.5 rounded-full font-black uppercase tracking-widest">
+                                                        Mensalista
+                                                    </span>
+                                                )}
                                             </div>
                                             <div className="text-sm text-muted-foreground mt-1">
                                                 {booking.service_name} • R$ {booking.price.toFixed(2)}

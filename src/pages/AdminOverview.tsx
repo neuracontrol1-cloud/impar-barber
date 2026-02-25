@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Search, CheckCircle2, Ban, Clock, Scissors as ScissorsIcon, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, Search, CheckCircle2, Clock, Scissors as ScissorsIcon, MessageCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Booking } from '../types';
@@ -41,6 +41,7 @@ export function AdminOverview() {
                     price, 
                     duration_minutes,
                     status, 
+                    is_mensalista,
                     client_id,
                     clients (name, phone, email)
                 `)
@@ -58,6 +59,7 @@ export function AdminOverview() {
                 price: b.price,
                 duration_minutes: b.duration_minutes || 30,
                 status: b.status || 'pending',
+                is_mensalista: b.is_mensalista,
                 client: {
                     name: b.clients?.name || 'Cliente',
                     phone: b.clients?.phone || '',
@@ -190,8 +192,14 @@ export function AdminOverview() {
                                             <div>
                                                 <div className="flex items-center gap-2">
                                                     <h3 className="font-bold text-foreground text-lg">{booking.client.name}</h3>
-                                                    {booking.status === 'completed' && <CheckCircle2 className="w-4 h-4 text-green-600" />}
-                                                    {booking.status === 'cancelled' && <Ban className="w-4 h-4 text-red-600" />}
+                                                    {booking.is_mensalista && (
+                                                        <span className="text-[9px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-1.5 py-0.5 rounded-full font-black uppercase tracking-widest">
+                                                            Mensalista
+                                                        </span>
+                                                    )}
+                                                    <span className={`text-xs px-2 py-0.5 rounded-full capitalize ${booking.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                                                        {booking.status === 'completed' ? 'Concluído' : 'Pendente'}
+                                                    </span>
                                                 </div>
 
                                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-sm text-muted-foreground">

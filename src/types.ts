@@ -22,6 +22,7 @@ export interface Booking {
     duration_minutes?: number;
     status: 'pending' | 'completed' | 'cancelled';
     reminder_sent?: boolean;
+    is_mensalista?: boolean;
     client: {
         name: string;
         phone: string;
