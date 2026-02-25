@@ -40,8 +40,8 @@ export function DateStrip({ selectedDate, onSelectDate, bookingCounts = {} }: Da
     return (
         <div className="w-full space-y-4">
             {/* Days Horizontal Scroll */}
-            <div className="w-full overflow-x-auto pb-4 scrollbar-hide" ref={scrollRef}>
-                <div className="flex gap-3 px-1 min-w-max justify-start md:justify-center">
+            <div className="w-full overflow-x-auto pb-4 pt-2 scrollbar-hide" ref={scrollRef}>
+                <div className="flex gap-3 px-2 min-w-max justify-start md:justify-center">
                     {daysInMonth.map((date) => {
                         const isSelected = isSameDay(date, selectedDate);
                         const isToday = isSameDay(date, new Date());
