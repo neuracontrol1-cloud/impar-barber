@@ -149,14 +149,14 @@ export function AdminDashboard() {
 
     useEffect(() => {
         fetchDaysWithBookings();
-    }, []);
+    }, [selectedDate]); // Refresh when month changes (as selectedDate month changes)
 
     // New function to fetch dates that have bookings for the "dots" on DateStrip
     const fetchDaysWithBookings = async () => {
         try {
             const today = new Date();
-            const startRange = subDays(today, 60); // Look back 60 days
-            const endRange = addDays(today, 60); // Look ahead 60 days
+            const startRange = subDays(today, 60); // Keep 60 days back
+            const endRange = addDays(today, 365); // Expanded to 1 year ahead
 
             const { data, error } = await supabase
                 .from('bookings')
@@ -582,10 +582,12 @@ export function AdminDashboard() {
             <NewBookingModal
                 isOpen={newBookingModalOpen}
                 onClose={() => setNewBookingModalOpen(false)}
-                onSuccess={() => fetchDashboardData()}
+                onSuccess={() => {
+                    fetchDashboardData();
+                    fetchDaysWithBookings();
+                }}
                 initialDate={selectedDate}
             />
         </div >
     );
 }
-
