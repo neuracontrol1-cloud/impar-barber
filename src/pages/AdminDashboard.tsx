@@ -84,6 +84,7 @@ export function AdminDashboard() {
                     date,
                     service_name, 
                     price,
+                    duration_minutes,
                     status,
                     clients (name, phone)
                 `)
@@ -104,6 +105,7 @@ export function AdminDashboard() {
                         date: b.date,
                         service_name: b.service_name,
                         price: b.price,
+                        duration_minutes: b.duration_minutes || 30,
                         status: b.status || 'pending', // Default to pending if null
                         client: {
                             name: b.clients?.name || 'Cliente Desconhecido',

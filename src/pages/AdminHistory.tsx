@@ -39,6 +39,7 @@ export function AdminHistory() {
                     date,
                     service_name, 
                     price,
+                    duration_minutes,
                     status,
                     clients (name, phone)
                 `)
@@ -78,6 +79,7 @@ export function AdminHistory() {
                         date: b.date,
                         service_name: b.service_name,
                         price: b.price,
+                        duration_minutes: b.duration_minutes || 30,
                         status: b.status,
                         client: {
                             name: b.clients?.name || 'Cliente Desconhecido',

@@ -38,6 +38,7 @@ export function AdminOverview() {
                     time, 
                     service_name, 
                     price, 
+                    duration_minutes,
                     status, 
                     client_id,
                     clients (name, phone, email)
@@ -54,6 +55,7 @@ export function AdminOverview() {
                 time: b.time,
                 service_name: b.service_name,
                 price: b.price,
+                duration_minutes: b.duration_minutes || 30,
                 status: b.status || 'pending',
                 client: {
                     name: b.clients?.name || 'Cliente',
