@@ -218,13 +218,13 @@ export function AdminDashboard() {
 
             if (error) throw error;
 
-            // Update status locally instead of removing
-            setBookings(prev => prev.map(b => b.id === selectedBooking.id ? { ...b, status: action } : b));
+            // Refresh everything to sync stats and list
+            await fetchDashboardData();
+
             setModalOpen(false);
             setSelectedBooking(null);
 
-            // Optional: Show success feedback (toast would be better, but alert for now is consistent)
-            // alert(`Agendamento ${ action === 'completed' ? 'concluído' : 'cancelado'}!`); 
+            alert(`Agendamento ${action === 'completed' ? 'concluído' : 'cancelado'} com sucesso!`);
         } catch (error) {
             console.error(`Erro ao atualizar status para ${action}: `, error);
             alert('Erro ao atualizar status.');
