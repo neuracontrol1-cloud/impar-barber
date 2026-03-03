@@ -60,7 +60,7 @@ export function Landing() {
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-full object-contain md:object-cover object-center md:object-center opacity-90"
+                        className="w-full h-full object-contain md:object-cover object-top md:object-center opacity-90"
                     />
                     {/* Gradient overlay to blend the bottom edge on mobile */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent md:hidden"></div>
