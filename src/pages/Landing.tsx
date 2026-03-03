@@ -266,7 +266,7 @@ export function Landing() {
                                 />
                                 {/* Portrait Layer */}
                                 <img
-                                    src="/barber_portrait_transparent.png"
+                                    src="/barber_portrait_apron.png"
                                     alt="Rafael Goulart"
                                     className="relative z-10 w-full h-full object-cover object-top opacity-95 transition-all duration-700 group-hover:scale-105 brightness-110 contrast-125 saturate-50 group-hover:brightness-100 group-hover:saturate-100"
                                 />
