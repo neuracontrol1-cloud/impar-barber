@@ -266,9 +266,9 @@ export function Landing() {
                                 />
                                 {/* Portrait Layer */}
                                 <img
-                                    src="/barber_portrait.png"
+                                    src="/barber_portrait_transparent.png"
                                     alt="Rafael Goulart"
-                                    className="relative z-10 w-full h-full object-cover object-top mix-blend-multiply opacity-95 transition-all duration-700 group-hover:scale-105 group-hover:mix-blend-normal brightness-110 contrast-125 saturate-50 group-hover:brightness-100 group-hover:saturate-100"
+                                    className="relative z-10 w-full h-full object-cover object-top opacity-95 transition-all duration-700 group-hover:scale-105 brightness-110 contrast-125 saturate-50 group-hover:brightness-100 group-hover:saturate-100"
                                 />
                                 <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black via-black/90 to-transparent p-6 pt-20">
                                     <h3 className="text-3xl font-serif text-white mb-1">RAFAEL GOULART</h3>
