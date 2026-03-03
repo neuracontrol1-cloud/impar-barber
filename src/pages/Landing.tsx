@@ -55,26 +55,26 @@ export function Landing() {
             </header>
 
             {/* Hero Section */}
-            <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
-                <div className="absolute inset-0 z-0 bg-[#0a0a0a] flex justify-center items-center overflow-hidden">
+            <section id="home" className="relative mt-20 flex flex-col md:block md:h-[calc(100vh-5rem)] bg-[#0a0a0a]">
+                <div className="relative md:absolute md:inset-0 z-0 w-full flex justify-center items-center overflow-hidden">
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-full object-contain md:object-cover object-top md:object-center opacity-90"
+                        className="w-full h-auto md:h-full object-cover object-top md:object-center opacity-90"
                     />
                     {/* Gradient overlay to blend the bottom edge on mobile */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent md:hidden"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a0a0a] to-transparent md:hidden"></div>
                 </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative z-10 w-full h-full px-6 flex flex-col justify-end items-center pb-12 sm:pb-20"
+                    className="relative z-10 w-full px-6 flex flex-col items-center pt-8 pb-16 md:h-full md:justify-end md:pb-20"
                 >
                     <button
                         onClick={() => navigate('/agendar')}
-                        className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300 mb-8 sm:mb-10"
+                        className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300 mb-10 w-full sm:w-auto"
                     >
                         <span className="relative z-10 flex items-center gap-2">
                             Agendar Horário <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
