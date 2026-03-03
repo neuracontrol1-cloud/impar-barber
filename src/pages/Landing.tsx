@@ -259,9 +259,9 @@ export function Landing() {
                         <div className="group cursor-pointer">
                             <div className="relative overflow-hidden w-72 h-96 border border-zinc-800 bg-zinc-900">
                                 <img
-                                    src="/rafael_portrait_v2.png"
+                                    src="/barber_portrait.png"
                                     alt="Rafael Goulart"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover:opacity-80 grayscale group-hover:grayscale-0"
+                                    className="w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-105 brightness-90 contrast-125 saturate-50 group-hover:brightness-100 group-hover:saturate-100"
                                 />
                                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6 pt-20">
                                     <h3 className="text-3xl font-serif text-white mb-1">RAFAEL GOULART</h3>
