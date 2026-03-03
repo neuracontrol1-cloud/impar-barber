@@ -61,7 +61,7 @@ export function Landing() {
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-full object-cover object-top md:object-center opacity-90"
+                        className="w-full h-full object-contain md:object-cover object-center md:object-center opacity-90"
                     />
                     {/* Gradient overlay to blend the bottom edge on mobile */}
                     <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent md:hidden"></div>
@@ -76,16 +76,16 @@ export function Landing() {
                     {/* Mobile Only Typography Elements */}
                     <div className="md:hidden w-full flex flex-col items-center text-center">
                         <span className="text-primary text-[10px] sm:text-xs tracking-[0.4em] uppercase mb-4 font-bold">
-                            Realce & Exclusividade
+                            Tradição & Respeito
                         </span>
 
-                        <h1 className="text-4xl sm:text-5xl font-serif text-white leading-[1.15] mb-2 px-2">
-                            BELEZA QUE<br />
-                            <span className="italic text-[#c29c5a] font-normal">se renova.</span>
+                        <h1 className="text-4xl sm:text-5xl font-serif text-white leading-[1.15] mb-2 px-2 uppercase">
+                            CUIDADO QUE<br />
+                            <span className="italic text-[#c29c5a] font-normal lowercase">te define.</span>
                         </h1>
 
-                        <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mt-6 max-w-[90%] font-light">
-                            Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante.
+                        <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mt-6 max-w-[90%] font-light italic">
+                            Onde a técnica clássica encontra o homem moderno. Sua melhor versão, com a excelência que você merece.
                         </p>
 
                         <button
