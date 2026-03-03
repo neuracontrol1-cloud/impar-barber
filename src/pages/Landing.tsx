@@ -55,26 +55,26 @@ export function Landing() {
             </header>
 
             {/* Hero Section */}
-            <section id="home" className="relative mt-20 flex flex-col md:block md:h-[calc(100vh-5rem)] bg-[#0a0a0a]">
-                <div className="relative md:absolute md:inset-0 z-0 w-full flex justify-center items-center overflow-hidden">
+            <section id="home" className="relative mt-20 flex flex-col md:block h-[calc(100vh-5rem)] bg-[#0a0a0a] overflow-hidden">
+                <div className="relative md:absolute md:inset-0 z-0 w-full shrink-0 md:h-full flex justify-center items-start overflow-hidden">
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-auto md:h-full object-cover object-top md:object-center opacity-90"
+                        className="w-full h-auto md:h-full object-contain md:object-cover object-top md:object-center opacity-90"
                     />
                     {/* Gradient overlay to blend the bottom edge on mobile */}
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a0a0a] to-transparent md:hidden"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent md:hidden"></div>
                 </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative z-10 w-full px-6 flex flex-col items-center pt-8 pb-16 md:h-full md:justify-end md:pb-20"
+                    className="relative z-10 w-full px-6 flex-1 flex flex-col justify-center items-center md:h-full md:justify-end md:pb-20"
                 >
                     <button
                         onClick={() => navigate('/agendar')}
-                        className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300 mb-10 w-full sm:w-auto"
+                        className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300 mb-8 sm:mb-10 w-full sm:w-auto shadow-2xl"
                     >
                         <span className="relative z-10 flex items-center gap-2">
                             Agendar Horário <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -82,7 +82,7 @@ export function Landing() {
                         <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-white/20"></div>
                     </button>
 
-                    <p className="text-2xl sm:text-3xl md:text-2xl text-white max-w-2xl text-center font-serif italic tracking-wide leading-relaxed drop-shadow-xl">
+                    <p className="text-2xl sm:text-3xl md:text-2xl text-white max-w-2xl text-center font-serif italic tracking-wide leading-relaxed drop-shadow-xl md:mb-10">
                         "Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto."
                     </p>
                 </motion.div>
