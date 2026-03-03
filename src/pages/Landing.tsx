@@ -137,7 +137,7 @@ export function Landing() {
             </section>
 
             {/* About Section */}
-            <section id="sobre" className="py-24 bg-background relative border-t border-white/5 overflow-hidden">
+            <section id="sobre" className="py-16 sm:py-24 bg-background relative border-t border-white/5 overflow-hidden">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +175,7 @@ export function Landing() {
             </section>
 
             {/* Services Minimalist Menu Section */}
-            <section id="servicos" className="py-24 bg-zinc-950 relative border-t border-white/5 overflow-hidden">
+            <section id="servicos" className="py-16 sm:py-24 bg-zinc-950 relative border-t border-white/5 overflow-hidden">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -232,7 +232,7 @@ export function Landing() {
             </section>
 
             {/* Professionals Section */}
-            <section id="profissionais" className="py-24 bg-background border-t border-white/5 relative overflow-hidden">
+            <section id="profissionais" className="py-16 sm:py-24 bg-background border-t border-white/5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-5 transform translate-x-1/4 -translate-y-1/4 pointer-events-none">
                     <User className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px]" />
                 </div>
