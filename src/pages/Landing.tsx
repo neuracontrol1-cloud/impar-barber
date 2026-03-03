@@ -70,18 +70,18 @@ export function Landing() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative z-10 w-full h-full px-4 flex flex-col justify-end items-center pb-12 sm:pb-20"
+                    className="relative z-10 w-full h-full px-4 flex flex-col justify-end items-center pb-16 sm:pb-20"
                 >
-                    <p className="text-base sm:text-lg md:text-xl text-zinc-300 max-w-2xl text-center mb-6 sm:mb-8 font-light tracking-wide drop-shadow-md">
+                    <p className="text-lg sm:text-xl md:text-2xl text-zinc-300 max-w-2xl text-center mb-8 sm:mb-10 font-light tracking-wide leading-relaxed drop-shadow-md">
                         Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
                     </p>
 
                     <button
                         onClick={() => navigate('/agendar')}
-                        className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300"
+                        className="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300"
                     >
                         <span className="relative z-10 flex items-center gap-2">
-                            Agendar Horário <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                            Agendar Horário <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                         <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-white/20"></div>
                     </button>
