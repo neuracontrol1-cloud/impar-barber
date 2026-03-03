@@ -55,22 +55,22 @@ export function Landing() {
             </header>
 
             {/* Hero Section */}
-            <section id="home" className="relative h-[calc(100vh-5rem)] mt-20 flex items-center justify-center">
-                <div className="absolute inset-0 z-0 bg-[#0a0a0a] flex justify-center items-center overflow-hidden">
+            <section id="home" className="mt-20 flex flex-col md:block relative md:h-[calc(100vh-5rem)] bg-[#0a0a0a]">
+                <div className="relative md:absolute md:inset-0 z-0 flex justify-center items-center overflow-hidden">
                     <img
                         src="/hero_bg_scissors.jpg"
                         alt="Impar Barbearia"
-                        className="w-full h-full object-contain md:object-cover object-top md:object-center opacity-90"
+                        className="w-full h-auto md:h-full object-contain md:object-cover object-center opacity-90"
                     />
                     {/* Gradient overlay to blend the bottom edge on mobile */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent md:hidden"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent md:hidden pointer-events-none"></div>
                 </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative z-10 w-full h-full px-4 flex flex-col justify-end items-center pb-16 sm:pb-20"
+                    className="relative z-10 w-full px-4 flex flex-col items-center -mt-8 md:mt-0 pt-0 pb-16 md:h-full md:justify-end md:pb-20"
                 >
                     <p className="text-lg sm:text-xl md:text-2xl text-zinc-300 max-w-2xl text-center mb-8 sm:mb-10 font-light tracking-wide leading-relaxed drop-shadow-md">
                         Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto.
