@@ -72,19 +72,19 @@ export function Landing() {
                     transition={{ duration: 1, delay: 0.2 }}
                     className="relative z-10 w-full h-full px-6 flex flex-col justify-end items-center pb-12 sm:pb-20"
                 >
-                    <p className="text-2xl sm:text-3xl md:text-2xl text-white max-w-2xl text-center mb-10 sm:mb-10 font-serif italic tracking-wide leading-relaxed drop-shadow-xl">
-                        "Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto."
-                    </p>
-
                     <button
                         onClick={() => navigate('/agendar')}
-                        className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300"
+                        className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-black uppercase tracking-widest bg-primary overflow-hidden hover:scale-105 transition-transform duration-300 mb-8 sm:mb-10"
                     >
                         <span className="relative z-10 flex items-center gap-2">
                             Agendar Horário <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                         </span>
                         <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-white/20"></div>
                     </button>
+
+                    <p className="text-2xl sm:text-3xl md:text-2xl text-white max-w-2xl text-center font-serif italic tracking-wide leading-relaxed drop-shadow-xl">
+                        "Uma barbearia moderna com uma dose retrô que se diferencia pela forma tradicional de atendimento e proporciona aos clientes um local aconchegante, agradável e discreto."
+                    </p>
                 </motion.div>
             </section>
 
