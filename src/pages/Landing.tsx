@@ -80,8 +80,8 @@ export function Landing() {
                         </span>
 
                         <h1 className="text-4xl sm:text-5xl font-serif text-white leading-[1.15] mb-2 px-2 uppercase">
-                            CUIDADO QUE<br />
-                            <span className="italic text-[#c29c5a] font-normal lowercase">te define.</span>
+                            ESTILO QUE<br />
+                            <span className="italic text-[#c29c5a] font-normal lowercase">impõe respeito.</span>
                         </h1>
 
                         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mt-6 max-w-[90%] font-light italic">
