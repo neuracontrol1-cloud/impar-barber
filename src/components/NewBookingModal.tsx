@@ -180,9 +180,9 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-background/90 backdrop-blur-md">
-            <div className="bg-card border-2 border-primary/20 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
-                <div className="p-5 border-b flex justify-between items-center bg-zinc-900">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-background/90 backdrop-blur-md">
+            <div className="bg-card border-2 border-primary/20 rounded-2xl sm:rounded-3xl shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
+                <div className="p-4 sm:p-5 border-b flex justify-between items-center bg-zinc-900">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-primary/20 rounded-xl text-primary">
                             <RefreshCw className="w-5 h-5" />
@@ -197,7 +197,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-hide">
+                <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-8 scrollbar-hide">
                     {/* Step 1: Client Info */}
                     <section className="space-y-4">
                         <div className="flex items-center justify-between">
@@ -259,7 +259,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                     </section>
 
                     {/* Step 3: Date & Time */}
-                    <section className="grid lg:grid-cols-2 gap-10 pt-4 border-t border-border/50">
+                    <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 pt-4 border-t border-border/50">
                         <div className="space-y-4">
                             <h3 className="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
                                 <Calendar className="w-4 h-4" /> 3. Data do Primeiro Horário
@@ -344,7 +344,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                     </section>
                 </div>
 
-                <div className="p-6 border-t bg-zinc-900/50 flex flex-col sm:flex-row justify-between gap-4">
+                <div className="p-4 sm:p-6 border-t bg-zinc-900/50 flex flex-col sm:flex-row justify-between gap-4">
                     <div className="flex items-center gap-3">
                         <div className="hidden sm:block text-xs text-muted-foreground uppercase font-bold tracking-tighter">
                             Resumo Final:
