@@ -38,7 +38,7 @@ export function DateStrip({ selectedDate, onSelectDate, bookingCounts = {} }: Da
     });
 
     return (
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-4 relative z-0">
             {/* Days Horizontal Scroll */}
             <div className="w-full overflow-x-auto pb-4 pt-4 scrollbar-hide" ref={scrollRef}>
                 <div className="flex gap-3 px-6 min-w-max justify-start md:justify-center">

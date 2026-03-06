@@ -121,7 +121,7 @@ export function RecentBookings() {
 
             {/* Popover */}
             {isOpen && (
-                <div className="absolute right-0 top-full mt-3 w-[450px] bg-card/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="absolute right-0 top-full mt-3 w-[450px] bg-card/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-[100] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="p-4 border-b border-white/5 bg-white/5 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <h3 className="font-bold text-xs uppercase tracking-[0.2em]">Fluxo Recente</h3>
