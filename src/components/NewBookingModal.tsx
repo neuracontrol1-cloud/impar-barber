@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, User, Calendar, Clock, Check, Loader2, RefreshCw } from 'lucide-react';
 import { format, addWeeks } from 'date-fns';
 import { supabase } from '../lib/supabase';
@@ -30,6 +30,10 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
         months: 1
     });
 
+    // Refs for Auto-scroll
+    const dateSectionRef = useRef<HTMLDivElement>(null);
+    const timeSectionRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         if (isOpen) {
             fetchServices();
@@ -40,6 +44,24 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
     useEffect(() => {
         if (selectedDate) {
             fetchExistingBookings();
+        }
+    }, [selectedDate]);
+
+    // Auto-scroll logic: Service -> Date
+    useEffect(() => {
+        if (selectedServiceIds.length > 0 && isOpen) {
+            dateSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [selectedServiceIds.length]);
+
+    // Auto-scroll logic: Date -> Time
+    useEffect(() => {
+        if (selectedDate && isOpen) {
+            // Small delay to ensure any layout shifts/loading finishes
+            const timer = setTimeout(() => {
+                timeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+            return () => clearTimeout(timer);
         }
     }, [selectedDate]);
 
@@ -259,7 +281,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                     </section>
 
                     {/* Step 3: Date & Time */}
-                    <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 pt-4 border-t border-border/50">
+                    <section ref={dateSectionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 pt-4 border-t border-border/50">
                         <div className="space-y-4">
                             <h3 className="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
                                 <Calendar className="w-4 h-4" /> 3. Data do Primeiro Horário
@@ -268,7 +290,7 @@ export function NewBookingModal({ isOpen, onClose, onSuccess, initialDate = new 
                                 <BookingCalendar selectedDate={selectedDate} onDateSelect={setSelectedDate} />
                             </div>
                         </div>
-                        <div className="space-y-4">
+                        <div ref={timeSectionRef} className="space-y-4">
                             <h3 className="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
                                 <Clock className="w-4 h-4" /> 4. Horário Inicial
                             </h3>
