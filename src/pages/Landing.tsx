@@ -183,7 +183,7 @@ export function Landing() {
                             <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zinc-900 border border-zinc-800 mb-2">
                                 <Scissors className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                             </div>
-                            <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white">A BARBEARIA</h2>
+                            <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white">A BARBEARIA [VERSÃO DINÂMICA]</h2>
                             <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
                                 Situado em um ponto nobre, a Impar Barbearia destaca-se pela excelência de seus profissionais e ambiente acolhedor.
                             </p>
