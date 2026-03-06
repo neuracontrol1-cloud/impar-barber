@@ -1,9 +1,35 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Scissors, User, CalendarDays, ArrowRight, Instagram, MapPin } from 'lucide-react';
+import { Scissors, User, CalendarDays, ArrowRight, Instagram, MapPin, Clock, MessageCircle, ChevronRight, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
+import type { Service } from '../types';
 
 export function Landing() {
     const navigate = useNavigate();
+    const [services, setServices] = useState<Service[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('services')
+                    .select('*')
+                    .eq('active', true)
+                    .order('price', { ascending: true });
+
+                if (error) throw error;
+                if (data) setServices(data);
+            } catch (error) {
+                console.error('Error fetching services:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchServices();
+    }, []);
 
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
         e.preventDefault();
@@ -189,38 +215,34 @@ export function Landing() {
                     </div>
 
                     <div className="space-y-6">
-                        {/* Service Item 1 */}
-                        <div className="group flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 sm:gap-0 border-b border-zinc-800 pb-4 hover:border-primary transition-colors">
-                            <div>
-                                <h3 className="text-xl sm:text-2xl font-serif text-zinc-200 group-hover:text-white transition-colors">CORTE CLÁSSICO</h3>
-                                <p className="text-xs sm:text-sm text-zinc-500 font-sans mt-1">Acabamento na navalha, lavagem e finalização.</p>
+                        {isLoading ? (
+                            <div className="text-center py-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+                                <p className="text-zinc-500 mt-4 font-light">Carregando serviços...</p>
                             </div>
-                            <div className="text-lg sm:text-xl font-serif text-primary">R$ 55</div>
-                        </div>
-                        {/* Service Item 2 */}
-                        <div className="group flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 sm:gap-0 border-b border-zinc-800 pb-4 hover:border-primary transition-colors">
-                            <div>
-                                <h3 className="text-xl sm:text-2xl font-serif text-zinc-200 group-hover:text-white transition-colors">BARBA TERAPIA</h3>
-                                <p className="text-xs sm:text-sm text-zinc-500 font-sans mt-1">Toalha quente, massagem facial e produtos premium.</p>
-                            </div>
-                            <div className="text-lg sm:text-xl font-serif text-primary">R$ 45</div>
-                        </div>
-                        {/* Service Item 3 */}
-                        <div className="group flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 sm:gap-0 border-b border-zinc-800 pb-4 hover:border-primary transition-colors">
-                            <div>
-                                <h3 className="text-xl sm:text-2xl font-serif text-zinc-200 group-hover:text-white transition-colors">CORTE + BARBA VIP</h3>
-                                <p className="text-xs sm:text-sm text-zinc-500 font-sans mt-1">Combo completo com lavagem especial e alinhamento dos fios.</p>
-                            </div>
-                            <div className="text-lg sm:text-xl font-serif text-primary">R$ 90</div>
-                        </div>
-                        {/* Service Item 4 */}
-                        <div className="group flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 sm:gap-0 border-b border-zinc-800 pb-4 hover:border-primary transition-colors">
-                            <div>
-                                <h3 className="text-xl sm:text-2xl font-serif text-zinc-200 group-hover:text-white transition-colors">SOBRANCELHA</h3>
-                                <p className="text-xs sm:text-sm text-zinc-500 font-sans mt-1">Limpeza e alinhamento do design na navalha.</p>
-                            </div>
-                            <div className="text-lg sm:text-xl font-serif text-primary">R$ 20</div>
-                        </div>
+                        ) : services.length > 0 ? (
+                            services.map((service) => (
+                                <div key={service.id} className="group flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 sm:gap-0 border-b border-zinc-800 pb-4 hover:border-primary transition-colors">
+                                    <div>
+                                        <h3 className="text-xl sm:text-2xl font-serif text-zinc-200 group-hover:text-white transition-colors uppercase">
+                                            {service.name}
+                                        </h3>
+                                        {service.description && (
+                                            <p className="text-xs sm:text-sm text-zinc-500 font-sans mt-1">
+                                                {service.description}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="text-lg sm:text-xl font-serif text-primary">
+                                        R$ {service.price}
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-center text-zinc-500 py-12 font-light">
+                                Nenhum serviço disponível no momento.
+                            </p>
+                        )}
                     </div>
 
                     <div className="mt-12 sm:mt-16 text-center">
