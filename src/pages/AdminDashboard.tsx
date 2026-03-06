@@ -495,15 +495,23 @@ export function AdminDashboard() {
                                                 <span className="text-[10px] opacity-70 border-t border-current/20 mt-1 pt-1 font-medium">até {minutesToTime(timeToMinutes(booking.time) + (booking.duration_minutes || 30))}</span>
                                             </div>
                                             <div>
-                                                <div className="flex items-center gap-2 font-medium">
-                                                    <User className="w-4 h-4 text-muted-foreground" />
-                                                    {booking.client.name}
-                                                    {booking.is_mensalista && (
-                                                        <span className="text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full font-black uppercase tracking-widest shadow-lg shadow-amber-500/10">
-                                                            Mensalista
-                                                        </span>
-                                                    )}
-                                                    {late && <span className="text-[10px] bg-amber-200 text-amber-800 dark:bg-amber-900 dark:text-amber-100 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Aguardando Conclusão</span>}
+                                                <div className="flex items-center gap-2 flex-wrap font-medium">
+                                                    <div className="flex items-center gap-2 min-w-0">
+                                                        <User className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                                        <span className="truncate">{booking.client.name}</span>
+                                                    </div>
+                                                    <div className="flex gap-1.5 flex-wrap">
+                                                        {booking.is_mensalista && (
+                                                            <span className="text-[9px] sm:text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full font-black uppercase tracking-widest shadow-lg shadow-amber-500/10 whitespace-nowrap">
+                                                                Mensalista
+                                                            </span>
+                                                        )}
+                                                        {late && (
+                                                            <span className="text-[9px] sm:text-[10px] bg-amber-200 text-amber-800 dark:bg-amber-900 dark:text-amber-100 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider whitespace-nowrap">
+                                                                Aguardando Conclusão
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
                                                 <div className="text-sm text-muted-foreground mt-1">
                                                     {booking.service_name} • R$ {booking.price.toFixed(2)}
