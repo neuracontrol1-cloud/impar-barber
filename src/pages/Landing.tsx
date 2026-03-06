@@ -1,3 +1,4 @@
+// Dynamic landing page v2
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Scissors, User, CalendarDays, ArrowRight, Instagram, MapPin, Clock, MessageCircle, ChevronRight, ArrowDown } from 'lucide-react';
