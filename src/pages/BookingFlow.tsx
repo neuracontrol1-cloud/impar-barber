@@ -10,7 +10,7 @@ import type { UserData, Service } from '../types';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-import { Link } from 'react-router-dom';
+
 
 import { supabase, saveBooking, getBookingsForDate } from '../lib/supabase';
 
@@ -246,16 +246,12 @@ function BookingFlow() {
           <div className="flex items-center gap-3">
             <img src="/header_logo_v3.png" alt="Impar Barbearia Logo" className="h-14 w-auto object-contain" />
           </div>
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-muted-foreground hidden sm:block">
-              Passo {step} de 4
-            </div>
-            <Link to="/login" className="text-sm font-medium hover:underline text-primary">
-              Sou Barbeiro
-            </Link>
+          <div className="text-sm text-muted-foreground hidden sm:block">
+            Passo {step} de 4
           </div>
         </div>
-      </header>
+    </div>
+      </header >
 
       <main className="container mx-auto px-4 py-8 pb-24">
         <div className="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 relative shadow-lg border border-border/50">
@@ -348,7 +344,7 @@ function BookingFlow() {
           )}
         </div>
       </footer>
-    </div>
+    </div >
   );
 }
 
