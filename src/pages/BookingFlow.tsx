@@ -250,8 +250,7 @@ function BookingFlow() {
             Passo {step} de 4
           </div>
         </div>
-    </div>
-      </header >
+      </header>
 
       <main className="container mx-auto px-4 py-8 pb-24">
         <div className="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 relative shadow-lg border border-border/50">
